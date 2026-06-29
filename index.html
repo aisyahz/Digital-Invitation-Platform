@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wedding Invitation | Adam & Hawa</title>
+    <!-- Google Fonts for Editorial Luxury Typography (Dior/Vogue/Apple Style) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@300;400;500;600;700&family=Montserrat:wght@100;200;300;400;500;600&family=Playfair+Display:ital,wght@0,400..600;1,300..500&display=swap" rel="stylesheet">
+    <!-- Link to external stylesheet -->
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body class="scroll-locked">
+    <!-- Ambient Ghibli-style falling particles canvas -->
+    <canvas id="ambient-canvas" class="ambient-canvas"></canvas>
+
+    <!-- Floating Circular Music Controller -->
+    <button id="music-toggle-btn" class="music-toggle-btn hidden" aria-label="Toggle Music">
+      <div class="music-disc">
+        <span class="music-note">♫</span>
+      </div>
+    </button>
+    <audio id="bg-music" loop src="https://assets.mixkit.co/music/preview/mixkit-beautiful-dream-acoustic-guitar-and-piano-131.mp3"></audio>
+
+    <!-- Main App Container Centered on Desktop (Max-width 430px mobile frame) -->
+    <main id="invitation-container" class="invitation-container scroll-locked">
+      
+      <!-- 1. CLOSED COVER / GATE FOLD SPLIT GATE OVERLAY -->
+      <section id="invitation-gate" class="invitation-gate">
+        <div class="gate-half left-gate">
+          <div class="gate-border-decor"></div>
+        </div>
+        <div class="gate-half right-gate">
+          <div class="gate-border-decor"></div>
+        </div>
+        
+        <!-- Elegantly minimal monogram & entry button -->
+        <div class="gate-center-content">
+          <div class="gate-monogram-container">
+            <span class="gate-monogram-subtitle">The Union of</span>
+            <div class="gate-monogram-title">A & H</div>
+            <div class="gate-monogram-divider"></div>
+          </div>
+          <button id="open-btn" class="open-btn" aria-label="Open Invitation">
+            <span class="open-btn-text">OPEN INVITATION</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- 2. MAIN STORYTELLING INVITATION CONTENT (Scrollable on open) -->
+      <article id="invitation-content" class="invitation-content hidden">
+        
+        <!-- SECTION 1: HERO VIEW (Visual Gateway) -->
+        <section class="scroll-section hero-section" id="section-hero">
+          <div class="hero-layer-container">
+            <!-- Full Background Artwork & Frame Overlay -->
+            <img src="assets/background.png" alt="Wedding Portrait Background" class="bg-img" referrerpolicy="no-referrer" />
+            <img src="assets/overlay.png" alt="Wedding Floral Overlay" class="overlay-img" referrerpolicy="no-referrer" />
+            
+            <!-- Elegant typography content centered in transparent arch area -->
+            <div class="dynamic-text-container">
+              <header class="wedding-header animate-on-scroll">
+                <span class="event-title" id="event-type">Walimatul Urus</span>
+              </header>
+              
+              <main class="wedding-names animate-on-scroll">
+                <h1 class="groom-name" id="groom-name">Adam</h1>
+                <span class="ampersand">and</span>
+                <h1 class="bride-name" id="bride-name">Hawa</h1>
+              </main>
+              
+              <footer class="wedding-footer animate-on-scroll">
+                <time class="wedding-date" id="event-date">29 June 2026</time>
+                <div class="wedding-footer-divider"></div>
+                <address class="wedding-venue" id="event-venue">Kuala Lumpur</address>
+              </footer>
+            </div>
+          </div>
+          
+          <!-- Subtle scroll indicator -->
+          <div class="scroll-down-indicator">
+            <span class="indicator-text">Scroll to Begin</span>
+            <span class="indicator-arrow">↓</span>
+          </div>
+        </section>
+
+        <!-- SECTION 2: BRIDE & GROOM PROFILE -->
+        <section class="scroll-section profile-section animate-on-scroll" id="section-profiles">
+          <div class="section-content-wrapper">
+            <div class="section-ornament">✦</div>
+            <h2 class="section-title">The Happy Couple</h2>
+            <p class="section-tagline">With joyful hearts, we introduce the bride and groom</p>
+            
+            <div class="profiles-container">
+              <!-- Groom Card -->
+              <div class="profile-card">
+                <div class="profile-img-frame">
+                  <img src="https://picsum.photos/seed/groom/300/400" alt="Adam" class="profile-avatar" referrerpolicy="no-referrer" />
+                </div>
+                <h3 class="profile-name">Adam</h3>
+                <p class="profile-desc">Son of Ahmad bin Sulaiman <br>&amp; Aminah binti Kassim</p>
+              </div>
+              
+              <div class="profile-divider-symbol">and</div>
+              
+              <!-- Bride Card -->
+              <div class="profile-card">
+                <div class="profile-img-frame">
+                  <img src="https://picsum.photos/seed/bride/300/400" alt="Hawa" class="profile-avatar" referrerpolicy="no-referrer" />
+                </div>
+                <h3 class="profile-name">Hawa</h3>
+                <p class="profile-desc">Daughter of Zainal bin Rashid <br>&amp; Fatimah binti Yahya</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 3: LIVE COUNTDOWN -->
+        <section class="scroll-section countdown-section animate-on-scroll" id="section-countdown">
+          <div class="section-content-wrapper">
+            <span class="countdown-subtitle">Counting down to the day of love</span>
+            <h2 class="countdown-title">Saving The Date</h2>
+            
+            <!-- Elegant Dial-like Grid Numbers -->
+            <div id="countdown-grid" class="countdown-grid">
+              <div class="countdown-item">
+                <span class="countdown-num" id="days">00</span>
+                <span class="countdown-label">Days</span>
+              </div>
+              <div class="countdown-item">
+                <span class="countdown-num" id="hours">00</span>
+                <span class="countdown-label">Hours</span>
+              </div>
+              <div class="countdown-item">
+                <span class="countdown-num" id="minutes">00</span>
+                <span class="countdown-label">Mins</span>
+              </div>
+              <div class="countdown-item">
+                <span class="countdown-num" id="seconds">00</span>
+                <span class="countdown-label">Secs</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 4: INVITATION MESSAGE -->
+        <section class="scroll-section message-section animate-on-scroll" id="section-message">
+          <div class="section-content-wrapper">
+            <div class="section-ornament">✦</div>
+            <div class="quote-box">
+              <p class="quote-arabic">"وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً"</p>
+              <p class="quote-translation">"And among His Signs is this, that He created for you mates from among yourselves, that ye may dwell in tranquillity with them, and He has put love and mercy between your hearts."</p>
+              <span class="quote-source">— Surah Ar-Rum: 21</span>
+            </div>
+            
+            <div class="invitation-paragraph">
+              <p>Under the blessing of Allah SWT, we cordially invite you to share our joy as we celebrate the wedding union of our beloved children.</p>
+              <p>Your presence and prayers will make this union complete and highly blessed.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 5: EVENT DETAILS & ITINERARY -->
+        <section class="scroll-section details-section animate-on-scroll" id="section-details">
+          <div class="section-content-wrapper">
+            <div class="section-ornament">✦</div>
+            <h2 class="section-title">The Celebration</h2>
+            <p class="section-tagline">Please join us to commemorate this holy occasion</p>
+            
+            <div class="details-cards-grid">
+              <div class="detail-card">
+                <div class="detail-icon">📅</div>
+                <h4>Date &amp; Time</h4>
+                <p class="detail-highlight">Saturday, 29 June 2026</p>
+                <p>11:00 AM — 4:00 PM</p>
+                <p class="detail-highlight-sub">Sanding Event: 1:00 PM</p>
+              </div>
+
+              <div class="detail-card">
+                <div class="detail-icon">🍽</div>
+                <h4>Wedding Feast</h4>
+                <p class="detail-highlight">12:00 PM — 3:30 PM</p>
+                <p>An array of local culinary experiences served in traditional buffet style.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 6: VENUE & EMBEDDED MAP -->
+        <section class="scroll-section venue-section animate-on-scroll" id="section-venue">
+          <div class="section-content-wrapper">
+            <div class="section-ornament">✦</div>
+            <h2 class="section-title">The Venue</h2>
+            <p class="venue-badge">Grand Ballroom</p>
+            <h3 class="venue-highlight-name">Glasshouse at Seputeh</h3>
+            <p class="venue-address-full">Lorong Seputeh, Seputeh, 58000 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur</p>
+            
+            <!-- Large Maps Area (Fills Mobile Frame Width Elegantly) -->
+            <div class="large-map-container">
+              <!-- Realistic styled static layout vector map for editorial look -->
+              <svg width="100%" height="100%" viewBox="0 0 400 220" fill="none" xmlns="http://www.w3.org/2000/svg" style="background-color: #faf8f5;">
+                <rect width="400" height="220" fill="#faf8f5"/>
+                <path d="M 0 60 L 400 130" stroke="#dfc384" stroke-width="1.5" />
+                <path d="M 120 0 L 150 220" stroke="#dfc384" stroke-width="1.2" />
+                <path d="M 280 0 L 250 220" stroke="#dfc384" stroke-width="1.2" />
+                <circle cx="138" cy="100" r="10" fill="#a8936d" />
+                <circle cx="138" cy="100" r="4" fill="#ffffff" />
+                <rect x="160" y="80" width="160" height="40" rx="0" fill="#ffffff" stroke="#a8936d" stroke-width="1" />
+                <text x="240" y="104" font-family="Montserrat" font-size="10" fill="#2d2a26" text-anchor="middle" font-weight="bold" letter-spacing="1.5">GLASSHOUSE SEPUTEH</text>
+              </svg>
+            </div>
+
+            <!-- Elegant Luxury Directional Buttons -->
+            <div class="luxury-map-links">
+              <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" class="lux-map-btn">
+                <span>Google Maps</span>
+              </a>
+              <a href="https://waze.com" target="_blank" rel="noopener noreferrer" class="lux-map-btn">
+                <span>Waze</span>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 7: STORY GALLERY (HORIZONTAL SWIPE GALLERY) -->
+        <section class="scroll-section gallery-section animate-on-scroll" id="section-gallery">
+          <div class="section-content-wrapper">
+            <div class="section-ornament">✦</div>
+            <h2 class="section-title">Moments of Us</h2>
+            <p class="section-tagline">Swipe sideways to explore our journey of togetherness</p>
+            
+            <!-- Horizontal Swipe Container -->
+            <div class="horizontal-swipe-gallery" id="horizontal-gallery">
+              <div class="swipe-item">
+                <img src="assets/background.png" alt="Love in the mountains" referrerpolicy="no-referrer" />
+                <span class="swipe-caption">Our Love in the Hills</span>
+              </div>
+              <div class="swipe-item">
+                <img src="https://picsum.photos/seed/wedding1/400/600" alt="Prewedding Sweet Moments" referrerpolicy="no-referrer" />
+                <span class="swipe-caption">Shared Laughter</span>
+              </div>
+              <div class="swipe-item">
+                <img src="https://picsum.photos/seed/wedding2/400/600" alt="Mountain Walk" referrerpolicy="no-referrer" />
+                <span class="swipe-caption">Walking Together</span>
+              </div>
+              <div class="swipe-item">
+                <img src="https://picsum.photos/seed/wedding3/400/600" alt="Garden Handhold" referrerpolicy="no-referrer" />
+                <span class="swipe-caption">A Beautiful Promise</span>
+              </div>
+            </div>
+            
+            <div class="swipe-hint-container">
+              <span class="swipe-hint-line"></span>
+              <span class="swipe-hint-text">Swipe to view</span>
+              <span class="swipe-hint-line"></span>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 8: DOA UNTUK PENGANTIN (ELEGANT TYPOGRAPHY) -->
+        <section class="scroll-section doa-section animate-on-scroll" id="section-doa">
+          <div class="section-content-wrapper">
+            <div class="doa-frame-decor">
+              <span class="doa-symbol">✦</span>
+              <h2 class="doa-title">Doa Untuk Pengantin</h2>
+              <p class="doa-arabic">"بَارَكَ اللهُ لَكَ وَبَارَكَ عَلَيْكَ وَجَمَعَ بَيْنَكُمَا فِي خَيْرٍ"</p>
+              <p class="doa-translation">"May Allah bless you, and shower His blessings upon you, and join you together in goodness and harmony."</p>
+              <div class="doa-footer-divider"></div>
+              <p class="doa-signoff">Amin Ya Rabbal Alamin</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 9: RSVP CALL TO ACTION CARD -->
+        <section class="scroll-section rsvp-cta-section animate-on-scroll" id="section-rsvp-cta">
+          <div class="section-content-wrapper">
+            <div class="rsvp-cta-card">
+              <span class="rsvp-cta-top">RESERVE YOUR PRESENCE</span>
+              <h2 class="rsvp-cta-title">Will you join us?</h2>
+              <p class="rsvp-cta-desc">Kindly celebrate with us by letting us know your attendance details.</p>
+              
+              <button id="section-rsvp-trigger" class="lux-rsvp-trigger-btn" data-target="modal-rsvp">
+                <span>Kind RSVP Response</span>
+              </button>
+              
+              <button id="section-contact-trigger" class="lux-contact-trigger-btn" data-target="modal-contact">
+                <span>Contact Family</span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 10: THANK YOU (CINEMATIC CLOSING) -->
+        <section class="scroll-section thank-you-section animate-on-scroll" id="section-thank-you">
+          <img src="assets/overlay.png" alt="Wedding Floral Overlay" class="section-overlay-img" referrerpolicy="no-referrer" />
+          <div class="section-content-wrapper">
+            <div class="thank-you-content">
+              <div class="thank-you-monogram">A & H</div>
+              <p class="thank-you-message">Thank you for being part of our story.</p>
+              <span class="thank-you-date">29 . 06 . 2026</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- LUXURY FLOATING RSVP ACCESS BUTTON (Shows when scrolling, simple pill) -->
+        <button class="luxury-floating-rsvp-btn" id="floating-rsvp-btn" data-target="modal-rsvp">
+          <span class="floating-rsvp-icon">♡</span>
+          <span class="floating-rsvp-text">RSVP</span>
+        </button>
+
+      </article>
+
+      <!-- 3. MODALS CONTAINER (Keep RSVP Modal as requested) -->
+      <div id="modal-container" class="modal-container">
+        <!-- Close Overlay Backplate -->
+        <div class="modal-backdrop" id="modal-backdrop"></div>
+
+        <!-- CONTACT MODAL -->
+        <div class="modal-content" id="modal-contact" role="dialog" aria-modal="true" aria-labelledby="contact-title">
+          <button class="modal-close" aria-label="Close modal">&times;</button>
+          <h2 id="contact-title" class="modal-title">Wedding Contacts</h2>
+          <div class="modal-body">
+            <div class="contact-card">
+              <h3 class="contact-group">Groom's Family</h3>
+              <div class="contact-row">
+                <span class="contact-name">Father: Ahmad bin Sulaiman</span>
+                <div class="contact-actions">
+                  <a href="tel:+60123456789" class="contact-link call" title="Call Ahmad">📞</a>
+                  <a href="https://wa.me/60123456789" target="_blank" rel="noopener noreferrer" class="contact-link whatsapp" title="WhatsApp Ahmad">💬</a>
+                </div>
+              </div>
+              <div class="contact-row">
+                <span class="contact-name">Mother: Aminah binti Kassim</span>
+                <div class="contact-actions">
+                  <a href="tel:+60123456790" class="contact-link call" title="Call Aminah">📞</a>
+                  <a href="https://wa.me/60123456790" target="_blank" rel="noopener noreferrer" class="contact-link whatsapp" title="WhatsApp Aminah">💬</a>
+                </div>
+              </div>
+            </div>
+            
+            <div class="contact-card border-top">
+              <h3 class="contact-group">Bride's Family</h3>
+              <div class="contact-row">
+                <span class="contact-name">Father: Zainal bin Rashid</span>
+                <div class="contact-actions">
+                  <a href="tel:+60198765432" class="contact-link call" title="Call Zainal">📞</a>
+                  <a href="https://wa.me/60198765432" target="_blank" rel="noopener noreferrer" class="contact-link whatsapp" title="WhatsApp Zainal">💬</a>
+                </div>
+              </div>
+              <div class="contact-row">
+                <span class="contact-name">Mother: Fatimah binti Yahya</span>
+                <div class="contact-actions">
+                  <a href="tel:+60198765433" class="contact-link call" title="Call Fatimah">📞</a>
+                  <a href="https://wa.me/60198765433" target="_blank" rel="noopener noreferrer" class="contact-link whatsapp" title="WhatsApp Fatimah">💬</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RSVP MODAL -->
+        <div class="modal-content" id="modal-rsvp" role="dialog" aria-modal="true" aria-labelledby="rsvp-title">
+          <button class="modal-close" aria-label="Close modal">&times;</button>
+          <h2 id="rsvp-title" class="modal-title">Kindly RSVP</h2>
+          <div class="modal-body">
+            <form id="rsvp-form" class="rsvp-form">
+              <p class="rsvp-subtitle">Please respond by June 1st</p>
+              
+              <div class="form-group">
+                <label for="rsvp-name">Full Name</label>
+                <input type="text" id="rsvp-name" name="name" required placeholder="Your beautiful name" />
+              </div>
+              
+              <div class="form-group">
+                <label for="rsvp-phone">Phone Number</label>
+                <input type="tel" id="rsvp-phone" name="phone" required placeholder="e.g., +60123456789" />
+              </div>
+
+              <div class="form-group">
+                <label for="rsvp-guests">Number of Guests</label>
+                <select id="rsvp-guests" name="guests" required>
+                  <option value="1">1 Person</option>
+                  <option value="2" selected>2 Persons</option>
+                  <option value="3">3 Persons</option>
+                  <option value="4">4 Persons</option>
+                  <option value="5">5+ Persons</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Attendance</label>
+                <div class="radio-group">
+                  <label class="radio-label">
+                    <input type="radio" name="attendance" value="Attending" checked />
+                    <span class="radio-custom"></span>
+                    <span>Attending</span>
+                  </label>
+                  <label class="radio-label">
+                    <input type="radio" name="attendance" value="Not Attending" />
+                    <span class="radio-custom"></span>
+                    <span>Regretfully</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="rsvp-message">Well Wishes</label>
+                <textarea id="rsvp-message" name="message" rows="3" placeholder="Leave a sweet greeting..."></textarea>
+              </div>
+
+              <button type="submit" class="submit-btn">Submit RSVP</button>
+            </form>
+
+            <!-- Success Confirmation State (Hidden initially) -->
+            <div id="rsvp-success" class="rsvp-success hidden">
+              <div class="success-icon">✦</div>
+              <h3>Gracefully Received</h3>
+              <p>Your RSVP response has been recorded successfully. We look forward to celebrating with you!</p>
+              <button class="success-close-btn" id="success-close-btn">Close Window</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- Vanilla Javascript Reference -->
+    <script type="module" src="./script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,8 @@
+{
+  "name": "Wedding Invitation",
+  "description": "A beautifully styled, fully interactive, single-page responsive wedding invitation prototype built using clean HTML, modern CSS, and vanilla JavaScript.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
