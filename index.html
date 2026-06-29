@@ -23,8 +23,307 @@
     </button>
     <audio id="bg-music" loop src="https://assets.mixkit.co/music/preview/mixkit-beautiful-dream-acoustic-guitar-and-piano-131.mp3"></audio>
 
+    <!-- Sticky Preview Mode Top Banner -->
+    <div id="preview-sticky-banner" class="preview-sticky-banner hidden">
+      <div class="preview-banner-content">
+        <span class="preview-banner-text">✨ PREVIEW MODE | She.Co Sandbox</span>
+        <div class="preview-banner-actions">
+          <a href="#create" class="preview-banner-btn-secondary">Edit Details</a>
+          <a href="#payment" class="preview-banner-btn-primary">Publish — RM99</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Live Success Modal Overlay -->
+    <div id="live-success-banner" class="live-success-banner hidden">
+      <div class="live-success-box">
+        <span class="live-success-icon">✦</span>
+        <h3>Your Invitation is Live!</h3>
+        <p>Your illustrated wedding invitation has been successfully published to the web.</p>
+        <div class="live-link-copy-container">
+          <input type="text" id="live-share-link" value="https://sheco.me/invite/adam-hawa" readonly />
+          <button id="btn-copy-live-link">Copy</button>
+        </div>
+        <button id="btn-dismiss-success" class="live-success-dismiss">View Invitation</button>
+      </div>
+    </div>
+
+    <!-- Double Border Elegant Watermark for Preview Screen -->
+    <div id="preview-watermark" class="preview-watermark">PREVIEW ONLY</div>
+
+    <!-- Creator Flow Container (centered, same width as invitation for perfect visual consistency) -->
+    <div id="creator-container" class="creator-container hidden">
+      
+      <!-- 1. HOMEPAGE VIEW -->
+      <div id="view-home" class="creator-view hidden">
+        <!-- Luxury Brand Header -->
+        <header class="creator-header">
+          <div class="brand-monogram">S</div>
+          <span class="brand-logo">She.Co Digital Invitation</span>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="home-hero">
+          <div class="home-badge">Premium Malay Wedding Invitations</div>
+          <h1 class="home-title">Illustrated Wedding Invitations That Come Alive</h1>
+          <p class="home-subtitle">Choose a design, fill in your wedding details, preview your invitation in real-time, and publish with complete RSVP guest tracking.</p>
+          
+          <div class="home-hero-actions">
+            <a href="#templates" class="home-btn-primary">View Templates</a>
+            <a href="#how-it-works" class="home-btn-secondary" id="scroll-to-how-it-works">How It Works</a>
+          </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section class="home-section" id="how-it-works-section">
+          <div class="section-divider">✦</div>
+          <h2 class="section-heading">How It Works</h2>
+          <p class="section-intro">Three simple steps to create your live cinematic experience.</p>
+          
+          <div class="steps-grid">
+            <div class="step-card">
+              <span class="step-num">01</span>
+              <h3>Choose Template</h3>
+              <p>Select from our hand-painted, watercolor layouts with beautiful custom-tailored motion and sways.</p>
+            </div>
+            <div class="step-card">
+              <span class="step-num">02</span>
+              <h3>Fill Details</h3>
+              <p>Type in your family profiles, event dates, times, venue coordinates, and background melody.</p>
+            </div>
+            <div class="step-card">
+              <span class="step-num">03</span>
+              <h3>Preview & Go Live</h3>
+              <p>Preview your live site instantly, process a test payment, and copy your secure published link.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Template Gallery Section -->
+        <section class="home-section" id="templates-section">
+          <div class="section-divider">✦</div>
+          <h2 class="section-heading">Our Art Gallery</h2>
+          <p class="section-intro">Every design is a continuous, hand-illustrated journey.</p>
+          
+          <div class="templates-list">
+            <!-- Card 1: Garden Romance -->
+            <div class="template-card">
+              <div class="template-card-preview garden-preview">
+                <div class="template-floating-petal" style="top: 25%; left: 35%; animation-delay: 0s;">🌸</div>
+                <div class="template-floating-petal" style="top: 55%; left: 75%; animation-delay: 1.2s;">🌸</div>
+                <div class="template-preview-text">Garden Romance</div>
+              </div>
+              <div class="template-card-info">
+                <div class="template-price">RM 99</div>
+                <h3 class="template-name">Garden Romance</h3>
+                <p class="template-desc">Soft pastel watercolor garden flowers, hand-drawn floral ornaments, and elegant warm gold falling sways.</p>
+                <button class="choose-template-btn" data-template="garden">Choose Template</button>
+              </div>
+            </div>
+
+            <!-- Card 2: Royal Malay -->
+            <div class="template-card">
+              <div class="template-card-preview royal-preview">
+                <div class="template-shimmer-effect"></div>
+                <div class="template-preview-text">Royal Malay</div>
+              </div>
+              <div class="template-card-info">
+                <div class="template-price">RM 99</div>
+                <h3 class="template-name">Royal Malay</h3>
+                <p class="template-desc">Bespoke luxury gold frame borders, classic Malay royal elements, and elegant glowing golden sparkles.</p>
+                <button class="choose-template-btn" data-template="royal">Choose Template</button>
+              </div>
+            </div>
+
+            <!-- Card 3: Islamic Minimal -->
+            <div class="template-card">
+              <div class="template-card-preview islamic-preview">
+                <div class="template-arch-outline"></div>
+                <div class="template-preview-text">Islamic Minimal</div>
+              </div>
+              <div class="template-card-info">
+                <div class="template-price">RM 99</div>
+                <h3 class="template-name">Islamic Minimal</h3>
+                <p class="template-desc">Bespoke Mosque architectural arch framing, serene sage-green accents, and soft falling gold-leaf particles.</p>
+                <button class="choose-template-btn" data-template="islamic">Choose Template</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Pricing Preview Section -->
+        <section class="home-section pricing-section">
+          <div class="section-divider">✦</div>
+          <h2 class="section-heading">Transparent Pricing</h2>
+          <div class="pricing-card">
+            <span class="pricing-badge">LIFETIME ACCESS</span>
+            <div class="pricing-value">RM 99</div>
+            <p class="pricing-desc">Everything you need for a premium experience. No monthly fees, no hosting charges.</p>
+            <ul class="pricing-features">
+              <li>✦ Cinematic Opening Gate Animation</li>
+              <li>✦ Ambient Background Ballad Music</li>
+              <li>✦ Complete Guest RSVP Form &amp; Tracker</li>
+              <li>✦ Dynamic Countdown Timer</li>
+              <li>✦ Interactive Maps (Google &amp; Waze)</li>
+              <li>✦ Mobile-Optimized Layout &amp; Scroll</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="home-section cta-section">
+          <h2 class="cta-heading">Create Yours Today</h2>
+          <p class="cta-text">Bring your Malay wedding invitation to life in minutes.</p>
+          <a href="#templates" class="home-btn-primary full-width">View Templates</a>
+          <p class="cta-fineprint">No login or credit card required to customize</p>
+        </section>
+      </div>
+
+      <!-- 2. WEDDING DETAILS FORM VIEW -->
+      <div id="view-create" class="creator-view hidden">
+        <div class="form-back-nav">
+          <a href="#home" class="btn-back-link">← Back to Home</a>
+        </div>
+        
+        <div class="creator-form-header">
+          <span class="form-step-indicator">Step 2 of 3</span>
+          <h2>Enter Wedding Details</h2>
+          <p>Please provide your wedding details. Our system will instantly generate your interactive invitation.</p>
+        </div>
+
+        <form id="creator-form" class="creator-details-form" onsubmit="return false;">
+          <div class="form-section-title">💍 The Happy Couple</div>
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="form-groom">Groom's First Name</label>
+              <input type="text" id="form-groom" required placeholder="e.g. Adam" value="Adam" />
+            </div>
+            <div class="form-field">
+              <label for="form-bride">Bride's First Name</label>
+              <input type="text" id="form-bride" required placeholder="e.g. Hawa" value="Hawa" />
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label for="form-event-type">Event Title Heading</label>
+            <input type="text" id="form-event-type" required placeholder="e.g. Walimatul Urus" value="Walimatul Urus" />
+            <span class="field-hint">Displayed beautifully as the main title header</span>
+          </div>
+
+          <div class="form-section-title">📅 Date &amp; Time</div>
+          <div class="form-field">
+            <label for="form-date">Wedding Date</label>
+            <input type="text" id="form-date" required placeholder="e.g. Saturday, 29 June 2026" value="Saturday, 29 June 2026" />
+          </div>
+
+          <div class="form-field">
+            <label for="form-time">Wedding Time Range</label>
+            <input type="text" id="form-time" required placeholder="e.g. 11:00 AM — 4:00 PM" value="11:00 AM — 4:00 PM" />
+          </div>
+
+          <div class="form-section-title">📍 Celebration Venue</div>
+          <div class="form-field">
+            <label for="form-venue-name">Venue Name</label>
+            <input type="text" id="form-venue-name" required placeholder="e.g. Glasshouse at Seputeh" value="Glasshouse at Seputeh" />
+          </div>
+
+          <div class="form-field">
+            <label for="form-venue-address">Full Address</label>
+            <textarea id="form-venue-address" rows="3" required placeholder="Enter complete venue address...">Lorong Seputeh, Seputeh, 58000 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur</textarea>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="form-gmaps">Google Maps URL</label>
+              <input type="url" id="form-gmaps" required placeholder="Google Maps Link" value="https://maps.google.com" />
+            </div>
+            <div class="form-field">
+              <label for="form-waze">Waze URL</label>
+              <input type="url" id="form-waze" required placeholder="Waze Link" value="https://waze.com" />
+            </div>
+          </div>
+
+          <div class="form-section-title">💬 Contact &amp; Ambiance</div>
+          <div class="form-field">
+            <label for="form-phone">Primary Contact Phone</label>
+            <input type="text" id="form-phone" required placeholder="e.g. 012-3456789" value="012-3456789" />
+          </div>
+
+          <div class="form-field">
+            <label for="form-music">Background Music Ballad (MP3 URL)</label>
+            <input type="url" id="form-music" placeholder="Optional customized MP3 link" value="https://assets.mixkit.co/music/preview/mixkit-beautiful-dream-acoustic-guitar-and-piano-131.mp3" />
+            <span class="field-hint">Leave default for our curated acoustic wedding guitar &amp; piano ballad</span>
+          </div>
+
+          <button type="submit" class="form-submit-btn">Preview Your Invitation</button>
+        </form>
+      </div>
+
+      <!-- 3. MOCK PAYMENT VIEW -->
+      <div id="view-payment" class="creator-view hidden">
+        <div class="form-back-nav">
+          <a href="#create" class="btn-back-link">← Back to Details</a>
+        </div>
+
+        <div class="payment-header">
+          <div class="brand-monogram">S</div>
+          <h2>Secure Checkout</h2>
+          <p>Host your premium digital wedding invitation. Ready instantly with RSVP tracking.</p>
+        </div>
+
+        <div class="payment-summary">
+          <div class="summary-row">
+            <span>Premium Invitation Lifetime Hosting License</span>
+            <span class="font-bold">RM 99</span>
+          </div>
+          <div class="summary-row text-xs text-gray-muted">
+            <span>Selected Design Theme, Custom Music, RSVP Exports</span>
+            <span>Free</span>
+          </div>
+          <div class="summary-row total-row">
+            <span>Total to Pay</span>
+            <span>RM 99</span>
+          </div>
+        </div>
+
+        <!-- Simulated Credit Card Form -->
+        <div class="mock-card-form">
+          <h3 class="card-form-title">Payment Details</h3>
+          
+          <div class="form-field">
+            <label>Cardholder Name</label>
+            <input type="text" value="Saisyah Zainal" disabled class="disabled-input" />
+          </div>
+
+          <div class="form-field">
+            <label>Card Number</label>
+            <input type="text" value="•••• •••• •••• 4444" disabled class="disabled-input" />
+          </div>
+
+          <div class="form-grid">
+            <div class="form-field">
+              <label>Expiry Date</label>
+              <input type="text" value="12 / 30" disabled class="disabled-input" />
+            </div>
+            <div class="form-field">
+              <label>CVV</label>
+              <input type="text" value="•••" disabled class="disabled-input" />
+            </div>
+          </div>
+
+          <button id="btn-complete-payment" class="payment-btn">Simulate Successful Payment</button>
+          
+          <div class="payment-trust-badge">
+            🔒 Test sandbox environment. No real funds will be charged.
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Main App Container Centered on Desktop (Max-width 430px mobile frame) -->
     <main id="invitation-container" class="invitation-container scroll-locked">
+      <!-- Luxury background/decor template elements injected based on selected theme -->
+      <div class="template-decoration-overlay"></div>
       
       <!-- 1. CLOSED COVER / GATE FOLD SPLIT GATE OVERLAY -->
       <section id="invitation-gate" class="invitation-gate">
@@ -39,7 +338,7 @@
         <div class="gate-center-content">
           <div class="gate-monogram-container">
             <span class="gate-monogram-subtitle">The Union of</span>
-            <div class="gate-monogram-title">A & H</div>
+            <div class="gate-monogram-title" id="gate-monogram-title">A & H</div>
             <div class="gate-monogram-divider"></div>
           </div>
           <button id="open-btn" class="open-btn" aria-label="Open Invitation">
@@ -98,7 +397,7 @@
                 <div class="profile-img-frame">
                   <img src="https://picsum.photos/seed/groom/300/400" alt="Adam" class="profile-avatar" referrerpolicy="no-referrer" />
                 </div>
-                <h3 class="profile-name">Adam</h3>
+                <h3 class="profile-name" id="profile-groom-name">Adam</h3>
                 <p class="profile-desc">Son of Ahmad bin Sulaiman <br>&amp; Aminah binti Kassim</p>
               </div>
               
@@ -109,7 +408,7 @@
                 <div class="profile-img-frame">
                   <img src="https://picsum.photos/seed/bride/300/400" alt="Hawa" class="profile-avatar" referrerpolicy="no-referrer" />
                 </div>
-                <h3 class="profile-name">Hawa</h3>
+                <h3 class="profile-name" id="profile-bride-name">Hawa</h3>
                 <p class="profile-desc">Daughter of Zainal bin Rashid <br>&amp; Fatimah binti Yahya</p>
               </div>
             </div>
@@ -172,8 +471,8 @@
               <div class="detail-card">
                 <div class="detail-icon">📅</div>
                 <h4>Date &amp; Time</h4>
-                <p class="detail-highlight">Saturday, 29 June 2026</p>
-                <p>11:00 AM — 4:00 PM</p>
+                <p class="detail-highlight" id="detail-date">Saturday, 29 June 2026</p>
+                <p id="detail-time">11:00 AM — 4:00 PM</p>
                 <p class="detail-highlight-sub">Sanding Event: 1:00 PM</p>
               </div>
 
@@ -193,8 +492,8 @@
             <div class="section-ornament">✦</div>
             <h2 class="section-title">The Venue</h2>
             <p class="venue-badge">Grand Ballroom</p>
-            <h3 class="venue-highlight-name">Glasshouse at Seputeh</h3>
-            <p class="venue-address-full">Lorong Seputeh, Seputeh, 58000 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur</p>
+            <h3 class="venue-highlight-name" id="venue-name">Glasshouse at Seputeh</h3>
+            <p class="venue-address-full" id="venue-address">Lorong Seputeh, Seputeh, 58000 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur</p>
             
             <!-- Large Maps Area (Fills Mobile Frame Width Elegantly) -->
             <div class="large-map-container">
@@ -207,16 +506,16 @@
                 <circle cx="138" cy="100" r="10" fill="#a8936d" />
                 <circle cx="138" cy="100" r="4" fill="#ffffff" />
                 <rect x="160" y="80" width="160" height="40" rx="0" fill="#ffffff" stroke="#a8936d" stroke-width="1" />
-                <text x="240" y="104" font-family="Montserrat" font-size="10" fill="#2d2a26" text-anchor="middle" font-weight="bold" letter-spacing="1.5">GLASSHOUSE SEPUTEH</text>
+                <text id="svg-venue-name" x="240" y="104" font-family="Montserrat" font-size="10" fill="#2d2a26" text-anchor="middle" font-weight="bold" letter-spacing="1.5">GLASSHOUSE SEPUTEH</text>
               </svg>
             </div>
 
             <!-- Elegant Luxury Directional Buttons -->
             <div class="luxury-map-links">
-              <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" class="lux-map-btn">
+              <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" class="lux-map-btn" id="btn-google-maps">
                 <span>Google Maps</span>
               </a>
-              <a href="https://waze.com" target="_blank" rel="noopener noreferrer" class="lux-map-btn">
+              <a href="https://waze.com" target="_blank" rel="noopener noreferrer" class="lux-map-btn" id="btn-waze">
                 <span>Waze</span>
               </a>
             </div>
@@ -296,9 +595,9 @@
           <img src="assets/overlay.png" alt="Wedding Floral Overlay" class="section-overlay-img" referrerpolicy="no-referrer" />
           <div class="section-content-wrapper">
             <div class="thank-you-content">
-              <div class="thank-you-monogram">A & H</div>
+              <div class="thank-you-monogram" id="thank-you-monogram">A & H</div>
               <p class="thank-you-message">Thank you for being part of our story.</p>
-              <span class="thank-you-date">29 . 06 . 2026</span>
+              <span class="thank-you-date" id="thank-you-date">29 . 06 . 2026</span>
             </div>
           </div>
         </section>

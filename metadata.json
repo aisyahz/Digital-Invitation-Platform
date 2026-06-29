@@ -1,6 +1,6 @@
 {
-  "name": "Wedding Invitation",
-  "description": "A beautifully styled, fully interactive, single-page responsive wedding invitation prototype built using clean HTML, modern CSS, and vanilla JavaScript.",
+  "name": "She.Co Digital Invitation",
+  "description": "A premium, hand-illustrated digital wedding invitation creator with custom template galleries, live sandbox previews, and mock publish payment flows.",
   "requestFramePermissions": [],
   "majorCapabilities": [
     "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
