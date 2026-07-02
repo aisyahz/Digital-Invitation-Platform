@@ -1,0 +1,180 @@
+/* modal.css - dialogs, backdrops, close buttons */
+/* 6. LUXURY MODAL STYLING (Vogue/Dior Aesthetic Card) */
+.modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 150;
+  display: none; /* Managed in script */
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.modal-container.active {
+  display: flex;
+}
+
+.modal-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(19, 18, 17, 0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 151;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.modal-container.active .modal-backdrop {
+  opacity: 1;
+}
+
+.modal-content {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  background-color: var(--color-cream);
+  border: 1px solid var(--color-gold-light);
+  border-radius: 0; /* Minimal, clean rectangular frame */
+  box-shadow: 0 30px 70px rgba(19, 18, 17, 0.15);
+  padding: 44px 28px;
+  z-index: 152;
+  display: none;
+  flex-direction: column;
+  max-height: 82%;
+  overflow-y: auto;
+  transform: scale(0.95) translateY(20px);
+  opacity: 0;
+  transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.8s ease;
+}
+
+/* Custom scrollbar for modals */
+.modal-content::-webkit-scrollbar {
+  width: 2px;
+}
+.modal-content::-webkit-scrollbar-thumb {
+  background: var(--color-gold-light);
+}
+
+.modal-container.active .modal-content.active {
+  display: flex;
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+/* Close button on modal */
+.modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 28px;
+  height: 28px;
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  font-weight: 200;
+  color: var(--color-gold-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.modal-close:hover {
+  color: var(--color-black-near);
+  transform: rotate(90deg);
+}
+
+.modal-title {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: 1.25rem;
+  color: var(--color-black-near);
+  margin-bottom: 28px;
+  text-align: center;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.modal-body {
+  width: 100%;
+  flex: 1;
+}
+
+
+/* CONTACTS SPECIFICS IN MODAL */
+.contact-card {
+  padding: 10px 0;
+}
+
+.border-top {
+  border-top: 1px solid rgba(168, 147, 109, 0.15);
+  margin-top: 16px;
+  padding-top: 16px;
+}
+
+.contact-group {
+  font-family: var(--font-serif);
+  font-size: 0.82rem;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--color-gold-dark);
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+}
+
+.contact-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.contact-name {
+  font-size: 0.72rem;
+  color: var(--color-charcoal);
+  font-weight: 400;
+}
+
+.contact-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.contact-link {
+  text-decoration: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.68rem;
+  transition: var(--transition-smooth);
+  border: 1px solid rgba(168, 147, 109, 0.2);
+}
+
+.contact-link.call {
+  background-color: var(--color-white);
+  color: var(--color-gold-dark);
+}
+
+.contact-link.whatsapp {
+  background-color: rgba(37, 211, 102, 0.02);
+  color: #25d366;
+  border-color: rgba(37, 211, 102, 0.15);
+}
+
+.contact-link:hover {
+  transform: scale(1.08);
+  border-color: var(--color-gold-dark);
+}
+
+

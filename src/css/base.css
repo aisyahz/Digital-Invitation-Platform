@@ -1,0 +1,63 @@
+/* base.css - reset, layout roots, core variables, body styles */
+/* ==========================================================================
+   WEDDING INVITATION CUSTOM STYLING - EDITORIAL LUXURY THEME (DIOR & APPLE)
+   ========================================================================== */
+
+/* 1. RESET & VARIABLE DEFINITIONS */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --font-serif: 'Playfair Display', 'Georgia', serif;
+  --font-display: 'Cinzel', serif;
+  --font-sans: 'Montserrat', system-ui, sans-serif;
+  
+  --color-gold-light: #dfc384;
+  --color-gold-dark: #a8936d;
+  --color-gold-cream: #f4eee1;
+  --color-charcoal: #2d2a26;
+  --color-black-near: #131211;
+  --color-cream: #faf8f5;
+  --color-cream-dark: #f0ece4;
+  --color-gray-dark: #6e6962;
+  --color-white: #ffffff;
+  
+  --shadow-luxury: 0 16px 45px rgba(168, 147, 109, 0.08);
+  --shadow-floating: 0 8px 30px rgba(19, 18, 17, 0.08);
+  --shadow-ambient: 0 4px 20px rgba(0, 0, 0, 0.02);
+  --transition-slow: all 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+  --transition-smooth: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-quick: all 0.25s ease;
+}
+
+html, body {
+  width: 100%;
+  background-color: #f5f4ef; /* Clean, minimal warm neutral page background */
+  font-family: var(--font-sans);
+  color: var(--color-charcoal);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  -webkit-font-smoothing: antialiased;
+}
+
+body.scroll-locked {
+  overflow: hidden;
+  height: 100vh;
+  height: 100dvh;
+}
+
+body:not(.scroll-locked) {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+
+/* Utilities */
+.hidden {
+  display: none !important;
+}
+

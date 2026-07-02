@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@300;400;500;600;700&family=Montserrat:wght@100;200;300;400;500;600&family=Playfair+Display:ital,wght@0,400..600;1,300..500&display=swap" rel="stylesheet">
     <!-- Link to external stylesheet -->
-    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./src/css/main.css" />
   </head>
   <body class="scroll-locked">
     <!-- Ambient Ghibli-style falling particles canvas -->
@@ -286,36 +286,98 @@
           </div>
         </div>
 
-        <!-- Simulated Credit Card Form -->
-        <div class="mock-card-form">
-          <h3 class="card-form-title">Payment Details</h3>
+        <!-- CHIP Hosted Payment Flow Concept -->
+        <div id="payment-flow-container" class="payment-flow-container">
           
-          <div class="form-field">
-            <label>Cardholder Name</label>
-            <input type="text" value="Saisyah Zainal" disabled class="disabled-input" />
-          </div>
+          <!-- STATE 1: Hosted Payment Overview (replaces fake card form) -->
+          <div id="payment-start-state" class="payment-state">
+            <div class="hosted-payment-card">
+              <div class="chip-badge-logo">
+                <span class="chip-dot">●</span> CHIP Hosted Checkout
+              </div>
+              
+              <p class="payment-explain-text">
+                Publishing your premium invitation is secure and instant. You will be redirected to the secure <strong>CHIP Payment Gateway</strong> to complete your purchase using FPX Online Banking, Credit Card, or e-Wallets.
+              </p>
+              
+              <div class="fpx-icon-strip">
+                <span class="bank-pill">FPX</span>
+                <span class="bank-pill">Visa</span>
+                <span class="bank-pill">Mastercard</span>
+                <span class="bank-pill">e-Wallet</span>
+              </div>
+              
+              <div class="payment-note-box">
+                💡 No credit card or bank credentials are collected within this application. All transactions occur securely on CHIP's hosted gateway screen.
+              </div>
 
-          <div class="form-field">
-            <label>Card Number</label>
-            <input type="text" value="•••• •••• •••• 4444" disabled class="disabled-input" />
-          </div>
-
-          <div class="form-grid">
-            <div class="form-field">
-              <label>Expiry Date</label>
-              <input type="text" value="12 / 30" disabled class="disabled-input" />
+              <!-- This button triggers State 2 (Loading) and creates the pending order -->
+              <button id="btn-publish-pay" class="payment-btn">
+                Publish — RM99
+              </button>
+              
+              <div class="payment-trust-badge">
+                🔒 Sandbox Integration Environment
+              </div>
             </div>
-            <div class="form-field">
-              <label>CVV</label>
-              <input type="text" value="•••" disabled class="disabled-input" />
+          </div>
+
+          <!-- STATE 2: Payment Loading Screen -->
+          <div id="payment-loading-state" class="payment-state hidden">
+            <div class="payment-loading-card">
+              <div class="loading-spinner-container">
+                <div class="payment-spinner"></div>
+              </div>
+              <h3>Connecting to CHIP...</h3>
+              <p>Preparing your hosted payment gateway session securely. Please do not close or refresh this page.</p>
+              <span class="loading-hint">Initializing secure POST request /api/payments/create...</span>
             </div>
           </div>
 
-          <button id="btn-complete-payment" class="payment-btn">Simulate Successful Payment</button>
-          
-          <div class="payment-trust-badge">
-            🔒 Test sandbox environment. No real funds will be charged.
+          <!-- STATE 3: CHIP Hosted Checkout Simulation -->
+          <div id="payment-simulation-state" class="payment-state hidden">
+            <div class="chip-gateway-container">
+              <div class="chip-gateway-header">
+                <div class="chip-logo">CHIP SECURE PAY</div>
+                <div class="secure-indicator">🔒 256-bit SSL</div>
+              </div>
+              
+              <div class="gateway-order-summary">
+                <div class="summary-line">
+                  <span class="label">Merchant</span>
+                  <span class="value font-medium">She.Co Digital Invitation</span>
+                </div>
+                <div class="summary-line">
+                  <span class="label">Order Ref</span>
+                  <span class="value" id="chip-sim-order-id">order_284910</span>
+                </div>
+                <div class="summary-line total">
+                  <span class="label">Amount Due</span>
+                  <span class="value amount">RM 99.00</span>
+                </div>
+              </div>
+              
+              <div class="gateway-action-container">
+                <p class="sim-alert-text">
+                  This is a simulated CHIP Hosted Checkout page representing the external gateway view.
+                </p>
+                
+                <!-- This button completes the transaction, sets "paid", removes watermark & opens live link -->
+                <button id="btn-simulate-success" class="gateway-btn-success">
+                  Simulate CHIP Payment Success
+                </button>
+                
+                <button id="btn-simulate-cancel" class="gateway-btn-cancel">
+                  Cancel &amp; Return to Merchant
+                </button>
+              </div>
+              
+              <div class="gateway-footer">
+                Powered by CHIP. Secure payments for Malaysia and SE Asia.
+              </div>
+            </div>
           </div>
+
         </div>
       </div>
     </div>
@@ -354,8 +416,8 @@
         <section class="scroll-section hero-section" id="section-hero">
           <div class="hero-layer-container">
             <!-- Full Background Artwork & Frame Overlay -->
-            <img src="assets/background.png" alt="Wedding Portrait Background" class="bg-img" referrerpolicy="no-referrer" />
-            <img src="assets/overlay.png" alt="Wedding Floral Overlay" class="overlay-img" referrerpolicy="no-referrer" />
+            <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Wedding Portrait Background" class="bg-img" referrerpolicy="no-referrer" />
+            <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Wedding Floral Overlay" class="overlay-img" referrerpolicy="no-referrer" />
             
             <!-- Elegant typography content centered in transparent arch area -->
             <div class="dynamic-text-container">
@@ -532,7 +594,7 @@
             <!-- Horizontal Swipe Container -->
             <div class="horizontal-swipe-gallery" id="horizontal-gallery">
               <div class="swipe-item">
-                <img src="assets/background.png" alt="Love in the mountains" referrerpolicy="no-referrer" />
+                <img src="https://picsum.photos/seed/wedding4/400/600" alt="Love in the mountains" referrerpolicy="no-referrer" />
                 <span class="swipe-caption">Our Love in the Hills</span>
               </div>
               <div class="swipe-item">
@@ -592,7 +654,7 @@
 
         <!-- SECTION 10: THANK YOU (CINEMATIC CLOSING) -->
         <section class="scroll-section thank-you-section animate-on-scroll" id="section-thank-you">
-          <img src="assets/overlay.png" alt="Wedding Floral Overlay" class="section-overlay-img" referrerpolicy="no-referrer" />
+          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Wedding Floral Overlay" class="section-overlay-img" referrerpolicy="no-referrer" />
           <div class="section-content-wrapper">
             <div class="thank-you-content">
               <div class="thank-you-monogram" id="thank-you-monogram">A & H</div>
@@ -725,6 +787,6 @@
     </main>
 
     <!-- Vanilla Javascript Reference -->
-    <script type="module" src="./script.js"></script>
+    <script type="module" src="./src/js/app.js"></script>
   </body>
 </html>

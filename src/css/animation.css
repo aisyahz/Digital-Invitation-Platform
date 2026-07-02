@@ -1,0 +1,39 @@
+/* animation.css - keyframes, transitions, particle sways */
+/* 7. SCROLL-ANIMATION TRIGGERS */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 900ms ease-out, transform 900ms ease-out;
+}
+
+.animate-on-scroll.animate-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Ambient Ghibli Canvas */
+.ambient-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2; /* behind modals (z-index: 100) and buttons, but above backgrounds */
+}
+
+@keyframes petal-sway {
+  from { transform: translateY(0) rotate(0deg); }
+  to { transform: translateY(8px) rotate(15deg); }
+}
+
+@keyframes content-reveal {
+  0% {
+    opacity: 0;
+    filter: blur(8px);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+  }
+}

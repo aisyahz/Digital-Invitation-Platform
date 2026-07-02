@@ -1,0 +1,59 @@
+<!-- 3. MOCK PAYMENT VIEW / SUCCESS FLOW -->
+<div id="view-payment" class="creator-view hidden">
+  <div class="form-back-nav">
+    <a href="#create" class="btn-back-link">← Back to Details</a>
+  </div>
+
+  <div class="payment-header">
+    <div class="brand-monogram">S</div>
+    <h2>Secure Checkout</h2>
+    <p>Host your premium digital wedding invitation. Ready instantly with RSVP tracking.</p>
+  </div>
+
+  <div class="payment-summary">
+    <div class="summary-row">
+      <span>Premium Invitation Lifetime Hosting License</span>
+      <span class="font-bold">RM 99</span>
+    </div>
+    <div class="summary-row text-xs text-gray-muted">
+      <span>Selected Design Theme, Custom Music, RSVP Exports</span>
+      <span>Free</span>
+    </div>
+    <div class="summary-row total-row">
+      <span>Total to Pay</span>
+      <span>RM 99</span>
+    </div>
+  </div>
+
+  <!-- Simulated Credit Card Form -->
+  <div class="mock-card-form">
+    <h3 class="card-form-title">Payment Details</h3>
+    
+    <div class="form-field">
+      <label>Cardholder Name</label>
+      <input type="text" value="Saisyah Zainal" disabled class="disabled-input" />
+    </div>
+
+    <div class="form-field">
+      <label>Card Number</label>
+      <input type="text" value="•••• •••• •••• 4444" disabled class="disabled-input" />
+    </div>
+
+    <div class="form-grid">
+      <div class="form-field">
+        <label>Expiry Date</label>
+        <input type="text" value="12 / 30" disabled class="disabled-input" />
+      </div>
+      <div class="form-field">
+        <label>CVV</label>
+        <input type="text" value="•••" disabled class="disabled-input" />
+      </div>
+    </div>
+
+    <button id="btn-complete-payment" class="payment-btn">Simulate Successful Payment</button>
+    
+    <div class="payment-trust-badge">
+      🔒 Test sandbox environment. No real funds will be charged.
+    </div>
+  </div>
+</div>

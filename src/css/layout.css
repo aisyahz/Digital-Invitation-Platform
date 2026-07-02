@@ -1,0 +1,149 @@
+/* layout.css - grid systems, main wrappers */
+/* 2. MAIN CONTAINER (MOBILE-FIRST FRAME) */
+.invitation-container {
+  position: relative;
+  width: 100%;
+  max-width: 430px; /* iPhone/Apple Mobile standard Awwwards viewport ratio */
+  background-color: var(--color-cream);
+  box-shadow: 0 25px 70px rgba(19, 18, 17, 0.1);
+  margin: 0 auto;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: box-shadow 0.5s ease;
+}
+
+/* Scroll behavior controls toggled on open */
+.invitation-container.scroll-locked {
+  height: 100vh;
+  height: 100dvh;
+}
+
+.invitation-container:not(.scroll-locked) {
+  height: auto;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* Custom global scrollbar to keep layout clean and elegant, dynamically following the theme colors */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-cream, #fdfbf7);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-gold-dark, #dfc384);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-charcoal, #2d2a26);
+}
+
+/* Scoped scrollbars within the invitation container also follow the active theme */
+.invitation-container::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+.invitation-container::-webkit-scrollbar-track {
+  background: var(--color-cream, #fdfbf7);
+}
+.invitation-container::-webkit-scrollbar-thumb {
+  background: var(--color-gold-dark, #dfc384);
+  border-radius: 3px;
+}
+.invitation-container::-webkit-scrollbar-thumb:hover {
+  background: var(--color-charcoal, #2d2a26);
+}
+
+/* Firefox scrollbar compatibility support */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-gold-dark, #dfc384) var(--color-cream, #fdfbf7);
+}
+
+/* Elegant thin gold frame positioned inside the card margins */
+.invitation-container::after {
+  content: '';
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  border: 1px solid var(--color-gold-light);
+  border-radius: 12px; /* Mirrored border radius for high-end luxury feel */
+  opacity: 0.22;
+  pointer-events: none;
+  z-index: 3;
+}
+
+
+
+/* ==========================================================================
+   SHE.CO DIGITAL INVITATION BRAND HOMEPAGE & CREATOR FLOW STYLES
+   ========================================================================== */
+
+/* Unified Creator Mobile-First Frame */
+.creator-container {
+  width: 100%;
+  max-width: 430px;
+  background-color: var(--color-cream);
+  min-height: 100vh;
+  min-height: 100dvh;
+  box-shadow: 0 25px 70px rgba(19, 18, 17, 0.1);
+  margin: 0 auto;
+  border-radius: 16px;
+  overflow-x: hidden;
+  position: relative;
+  border: 1px solid rgba(168, 147, 109, 0.15);
+  display: flex;
+  flex-direction: column;
+}
+
+.creator-view {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  animation: view-fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes view-fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Luxury Brand Header */
+.creator-header {
+  padding: 30px 24px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-monogram {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--color-gold-dark);
+  color: var(--color-gold-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  background-color: var(--color-white);
+}
+
+.brand-logo {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--color-charcoal);
+  text-indent: 4px;
+}
+

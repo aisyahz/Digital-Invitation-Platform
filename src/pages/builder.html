@@ -1,0 +1,79 @@
+<!-- 2. WEDDING DETAILS FORM VIEW -->
+<div id="view-create" class="creator-view hidden">
+  <div class="form-back-nav">
+    <a href="#home" class="btn-back-link">← Back to Home</a>
+  </div>
+  
+  <div class="creator-form-header">
+    <span class="form-step-indicator">Step 2 of 3</span>
+    <h2>Enter Wedding Details</h2>
+    <p>Please provide your wedding details. Our system will instantly generate your interactive invitation.</p>
+  </div>
+
+  <form id="creator-form" class="creator-details-form" onsubmit="return false;">
+    <div class="form-section-title">💍 The Happy Couple</div>
+    <div class="form-grid">
+      <div class="form-field">
+        <label for="form-groom">Groom's First Name</label>
+        <input type="text" id="form-groom" required placeholder="e.g. Adam" value="Adam" />
+      </div>
+      <div class="form-field">
+        <label for="form-bride">Bride's First Name</label>
+        <input type="text" id="form-bride" required placeholder="e.g. Hawa" value="Hawa" />
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label for="form-event-type">Event Title Heading</label>
+      <input type="text" id="form-event-type" required placeholder="e.g. Walimatul Urus" value="Walimatul Urus" />
+      <span class="field-hint">Displayed beautifully as the main title header</span>
+    </div>
+
+    <div class="form-section-title">📅 Date &amp; Time</div>
+    <div class="form-field">
+      <label for="form-date">Wedding Date</label>
+      <input type="text" id="form-date" required placeholder="e.g. Saturday, 29 June 2026" value="Saturday, 29 June 2026" />
+    </div>
+
+    <div class="form-field">
+      <label for="form-time">Wedding Time Range</label>
+      <input type="text" id="form-time" required placeholder="e.g. 11:00 AM — 4:00 PM" value="11:00 AM — 4:00 PM" />
+    </div>
+
+    <div class="form-section-title">📍 Celebration Venue</div>
+    <div class="form-field">
+      <label for="form-venue-name">Venue Name</label>
+      <input type="text" id="form-venue-name" required placeholder="e.g. Glasshouse at Seputeh" value="Glasshouse at Seputeh" />
+    </div>
+
+    <div class="form-field">
+      <label for="form-venue-address">Full Address</label>
+      <textarea id="form-venue-address" rows="3" required placeholder="Enter complete venue address...">Lorong Seputeh, Seputeh, 58000 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur</textarea>
+    </div>
+
+    <div class="form-grid">
+      <div class="form-field">
+        <label for="form-gmaps">Google Maps URL</label>
+        <input type="url" id="form-gmaps" required placeholder="Google Maps Link" value="https://maps.google.com" />
+      </div>
+      <div class="form-field">
+        <label for="form-waze">Waze URL</label>
+        <input type="url" id="form-waze" required placeholder="Waze Link" value="https://waze.com" />
+      </div>
+    </div>
+
+    <div class="form-section-title">💬 Contact &amp; Ambiance</div>
+    <div class="form-field">
+      <label for="form-phone">Primary Contact Phone</label>
+      <input type="text" id="form-phone" required placeholder="e.g. 012-3456789" value="012-3456789" />
+    </div>
+
+    <div class="form-field">
+      <label for="form-music">Background Music Ballad (MP3 URL)</label>
+      <input type="url" id="form-music" placeholder="Optional customized MP3 link" value="https://assets.mixkit.co/music/preview/mixkit-beautiful-dream-acoustic-guitar-and-piano-131.mp3" />
+      <span class="field-hint">Leave default for our curated acoustic wedding guitar &amp; piano ballad</span>
+    </div>
+
+    <button type="submit" class="form-submit-btn">Preview Your Invitation</button>
+  </form>
+</div>
