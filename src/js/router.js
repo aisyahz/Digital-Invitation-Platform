@@ -11,7 +11,8 @@ export function setupRouting() {
 }
 
 export function handleRoute() {
-  const hash = window.location.hash || "#home";
+  const rawHash = window.location.hash || "#home";
+  const hash = normalizeHash(rawHash);
   
   const creatorContainer = document.getElementById("creator-container");
   const invitationContainer = document.getElementById("invitation-container");
@@ -136,6 +137,18 @@ export function handleRoute() {
     loadAndInjectInvitationDetails();
     resetInvitationGate();
   }
+}
+
+function normalizeHash(hash) {
+  if (hash.startsWith("#/")) {
+    hash = `#${hash.slice(2)}`;
+  }
+
+  if (hash === "#builder") {
+    return "#create";
+  }
+
+  return hash;
 }
 
 /**
