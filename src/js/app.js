@@ -7,6 +7,7 @@ import { setupPaymentSimulation } from './payment.js';
 import { renderTemplateGallery } from './gallery.js';
 import { getSelectedTemplate, saveActiveDetails } from './storage.js';
 import { defaultInvitation } from '../config/constants.js';
+import { setupAppearanceController } from './appearance.js';
 
 // Initialize and bind events on DOM load
 document.addEventListener("DOMContentLoaded", () => {
@@ -15,6 +16,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Setup main routing system
   setupRouting();
+
+  // Setup appearance controller
+  setupAppearanceController();
   
   // Setup other interactive subsystems
   setupHomepageFlow();
@@ -49,6 +53,25 @@ function setupHomepageFlow() {
     creatorForm.addEventListener("submit", (e) => {
       e.preventDefault();
 
+      // Gather appearance details
+      const presetSelect = document.getElementById("form-appearance-preset");
+      const headingInput = document.getElementById("form-appearance-heading");
+      const bodyInput = document.getElementById("form-appearance-body");
+      const accentInput = document.getElementById("form-appearance-accent");
+      const shadowCheckbox = document.getElementById("form-appearance-shadow");
+      const overlaySlider = document.getElementById("form-appearance-overlay");
+      const btnStyleSelect = document.getElementById("form-appearance-btn-style");
+
+      const appearance = {
+        preset: presetSelect ? presetSelect.value : "designer",
+        headingColor: headingInput ? headingInput.value : "",
+        bodyColor: bodyInput ? bodyInput.value : "",
+        accentColor: accentInput ? accentInput.value : "",
+        textShadow: shadowCheckbox ? shadowCheckbox.checked : false,
+        overlayOpacity: overlaySlider ? parseFloat(overlaySlider.value) / 100 : 0.0,
+        buttonStyle: btnStyleSelect ? btnStyleSelect.value : "filled"
+      };
+
       // Bundle form fields to storage object
       const details = {
         template: getSelectedTemplate(),
@@ -62,10 +85,32 @@ function setupHomepageFlow() {
         gmaps: document.getElementById("form-gmaps").value.trim() || defaultInvitation.gmaps,
         waze: document.getElementById("form-waze").value.trim() || defaultInvitation.waze,
         phone: document.getElementById("form-phone").value.trim() || defaultInvitation.phone,
-        music: document.getElementById("form-music").value.trim() || defaultInvitation.music
+        music: document.getElementById("form-music").value.trim() || defaultInvitation.music,
+        appearance: appearance
       };
 
       saveActiveDetails(details);
+      
+      // Check if we are in Edit Mode to push changes directly to Supabase
+      const activeEditToken = localStorage.getItem("activeEditToken");
+      if (activeEditToken) {
+        import('../services/invitation.service.js').then(async (m) => {
+          const res = await m.invitationService.updateInvitation(activeEditToken, details);
+          
+          // Show small UI toast notification
+          const toast = document.getElementById("toast-container");
+          const toastMsg = document.getElementById("toast-message");
+          if (toast && toastMsg) {
+            toastMsg.textContent = res ? "Changes saved live to Supabase!" : "Failed to sync changes with Supabase.";
+            toast.classList.remove("hidden");
+            toast.classList.add("visible");
+            setTimeout(() => {
+              toast.classList.remove("visible");
+              toast.classList.add("hidden");
+            }, 3000);
+          }
+        });
+      }
       
       // Navigate straight to preview
       window.location.hash = "#preview";

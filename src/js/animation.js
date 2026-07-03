@@ -97,8 +97,8 @@ export function setupAmbientCanvas() {
         this.size = Math.random() * 3 + 1.5;
         this.speedY = Math.random() * 0.4 + 0.15; // float slow
         this.speedX = Math.random() * 0.2 - 0.1;
-        this.opacity = Math.random() * 0.6 + 0.3;
-        this.opacitySpeed = Math.random() * 0.02 + 0.01;
+        this.opacity = Math.random() * 0.2 + 0.1; // Reduced opacity range for subtle background elegance
+        this.opacitySpeed = Math.random() * 0.01 + 0.005;
         this.isRoyalSparkle = true;
       } 
       else if (this.template === "islamic") {

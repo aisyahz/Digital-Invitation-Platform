@@ -10,7 +10,16 @@ export const defaultInvitation = {
   gmaps: "https://maps.google.com",
   waze: "https://waze.com",
   phone: "012-3456789",
-  music: "https://assets.mixkit.co/music/preview/mixkit-beautiful-dream-acoustic-guitar-and-piano-131.mp3"
+  music: "https://assets.mixkit.co/music/preview/mixkit-beautiful-dream-acoustic-guitar-and-piano-131.mp3",
+  appearance: {
+    preset: "designer",
+    headingColor: "#2d2a26",
+    bodyColor: "#6e6962",
+    accentColor: "#a8936d",
+    textShadow: false,
+    overlayOpacity: 0.0,
+    buttonStyle: "filled"
+  }
 };
 
 export const targetCountdownDateStr = "Jun 29, 2026 11:00:00";

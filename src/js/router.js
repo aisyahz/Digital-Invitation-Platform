@@ -1,6 +1,9 @@
-import { getActiveDetails } from './storage.js';
+import { getActiveDetails, saveActiveDetails, setSelectedTemplate } from './storage.js';
 import { loadAndInjectInvitationDetails, resetInvitationGate } from './invitation.js';
 import { initPaymentPage } from './payment.js';
+import { refreshAppearanceFields } from './appearance.js';
+import { initAdminPage } from './admin.js';
+import { invitationService } from '../services/invitation.service.js';
 
 /**
  * Premium Hash-Based Routing System.
@@ -10,7 +13,7 @@ export function setupRouting() {
   handleRoute();
 }
 
-export function handleRoute() {
+export async function handleRoute() {
   const hash = window.location.hash || "#home";
   
   const creatorContainer = document.getElementById("creator-container");
@@ -31,14 +34,14 @@ export function handleRoute() {
   if (liveBanner) liveBanner.classList.add("hidden");
 
   // Hide all inner creator sub-views
-  const creatorViews = ["view-home", "view-create", "view-payment"];
+  const creatorViews = ["view-home", "view-create", "view-payment", "view-admin"];
   creatorViews.forEach(viewId => {
     const el = document.getElementById(viewId);
     if (el) el.classList.add("hidden");
   });
 
   // Stop background music playing on creator landing pages to keep focus
-  if (audio && !audio.paused && (hash === "#home" || hash === "#create" || hash === "#payment" || hash === "#templates")) {
+  if (audio && !audio.paused && (hash === "#home" || hash === "#create" || hash === "#payment" || hash === "#templates" || hash === "#admin")) {
     audio.pause();
     if (musicBtn) musicBtn.classList.remove("playing");
   }
@@ -63,6 +66,52 @@ export function handleRoute() {
       }, 100);
     }
   } 
+  else if (hash === "#admin") {
+    // Reveal Admin Console
+    if (creatorContainer) creatorContainer.classList.remove("hidden");
+    const vAdmin = document.getElementById("view-admin");
+    if (vAdmin) vAdmin.classList.remove("hidden");
+    if (musicBtn) musicBtn.classList.add("hidden");
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    initAdminPage();
+  }
+  else if (hash.startsWith("#edit/")) {
+    // Customer Edit Token Route
+    const token = hash.replace("#edit/", "");
+    if (creatorContainer) creatorContainer.classList.remove("hidden");
+    
+    // Show a loading message or prefetch the details
+    const invitation = await invitationService.getInvitationByEditToken(token);
+    if (invitation) {
+      // Store details and edit token locally
+      saveActiveDetails(invitation.content);
+      setSelectedTemplate(invitation.content.template || "garden");
+      localStorage.setItem("activeEditToken", token);
+      
+      // Save order published/paid status locally so the client preview works in non-watermark if paid
+      localStorage.setItem("paymentStatus", "paid"); // Force clean live preview editing
+      
+      // Create small UI toast edit notification
+      const toast = document.getElementById("toast-container");
+      const toastMsg = document.getElementById("toast-message");
+      if (toast && toastMsg) {
+        toastMsg.textContent = "Editing Invitation: " + invitation.content.groom + " & " + invitation.content.bride;
+        toast.classList.remove("hidden");
+        toast.classList.add("visible");
+        setTimeout(() => {
+          toast.classList.remove("visible");
+          toast.classList.add("hidden");
+        }, 3000);
+      }
+      
+      // Redirect to builder
+      window.location.hash = "#create";
+    } else {
+      // Redirect to home if invalid token
+      window.location.hash = "#home";
+    }
+  }
   else if (hash === "#create") {
     // Reveal Wedding Details Form
     if (creatorContainer) creatorContainer.classList.remove("hidden");
@@ -162,4 +211,7 @@ function prefillFormFields() {
     const el = document.getElementById(id);
     if (el) el.value = value;
   }
+
+  // Refresh appearance customizer settings inside builder form
+  refreshAppearanceFields();
 }

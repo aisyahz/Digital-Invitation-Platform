@@ -1238,6 +1238,7 @@
 }
 
 .form-field input,
+.form-field select,
 .form-field textarea {
   background-color: var(--color-white);
   border: 1px solid rgba(168, 147, 109, 0.25);
@@ -1250,7 +1251,52 @@
   width: 100%;
 }
 
+.form-field select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23131211' viewBox='0 0 24 24'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
+
+.form-field input[type="color"] {
+  height: 44px;
+  padding: 4px;
+  cursor: pointer;
+  border-radius: 4px;
+  border: 1px solid rgba(168, 147, 109, 0.25);
+}
+
+.form-field input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(168, 147, 109, 0.15);
+  outline: none;
+  padding: 0;
+  margin: 12px 0;
+}
+
+.form-field input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--color-gold-dark);
+  cursor: pointer;
+  transition: transform 0.1s ease;
+  border: none;
+}
+
+.form-field input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
 .form-field input:focus,
+.form-field select:focus,
 .form-field textarea:focus {
   outline: none;
   border-color: var(--color-gold-dark);
@@ -1532,18 +1578,279 @@ body.preview-mode .preview-watermark {
 }
 
 /* Template 2: Royal Malay overlay */
-.template-royal .template-decoration-overlay {
-  border: 4px double rgba(168, 147, 109, 0.35);
-  margin: 10px;
-  border-radius: 14px;
+.template-royal {
+  --color-cream: #5c0612; /* Deep royal red background */
+  --color-cream-dark: #42030b; /* Darker royal red */
+  --color-charcoal: #FAF6F0; /* Soft off-white for body readability */
+  --color-gold-light: #dfc384; /* Soft elegant gold */
+  --color-gold-dark: #f5d77f; /* Brighter glowing gold */
+  --color-gray-dark: #ecd085; /* Muted gold for small headings */
+  --color-white: #5c0612; /* Fallback containers on deep royal red */
 }
 
-.template-royal .event-title,
+/* Base custom background layout behavior for Royal Malay */
+.template-royal.invitation-container {
+  background-color: #5c0612 !important;
+}
+
+/* Custom scrollbar override for Royal Malay */
+.template-royal::-webkit-scrollbar-track {
+  background: #5c0612 !important;
+}
+
+.template-royal::-webkit-scrollbar-thumb {
+  background: #dfc384 !important;
+}
+
+.template-royal .template-decoration-overlay {
+  border: 4px double rgba(245, 215, 127, 0.35); /* Double gold border */
+  margin: 10px;
+  border-radius: 14px;
+  z-index: 5;
+}
+
+/* Typography elements overrides */
+.template-royal .event-title {
+  color: var(--color-gold-dark) !important;
+  font-family: var(--font-sans) !important; /* Editorial luxury heading */
+  font-size: 0.95rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 6px !important;
+  text-indent: 6px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Title-to-names whitespace spacing */
+.template-royal .wedding-header {
+  margin-bottom: 45px !important; /* Increased spacing */
+}
+
+/* Couple Names - playfair serif elegance with high-contrast text shadow */
 .template-royal .groom-name,
 .template-royal .bride-name {
-  color: var(--color-gold-dark);
-  font-family: var(--font-display) !important; /* Elegant Cinzel displays */
-  letter-spacing: 4px;
+  color: var(--color-gold-dark) !important;
+  font-family: var(--font-serif) !important; /* Elegant Serif */
+  font-size: clamp(3.2rem, 9vw, 3.8rem) !important; /* 20-25% larger names */
+  font-weight: 400 !important;
+  letter-spacing: 0.5px !important;
+  line-height: 1.25 !important;
+  text-shadow: 0 2px 10px rgba(245, 215, 127, 0.25), 0 1px 3px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Spacing under names */
+.template-royal .wedding-names {
+  margin-bottom: 35px !important; /* Generous whitespace */
+}
+
+/* Elegant quotation below the names */
+.template-royal .wedding-quote-container {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 40px !important;
+  width: 90%;
+  max-width: 290px;
+}
+
+.template-royal .wedding-quote {
+  font-family: var(--font-serif) !important;
+  font-size: 0.78rem !important;
+  line-height: 1.65 !important;
+  color: #FAF6F0 !important;
+  font-style: italic;
+  font-weight: 300 !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Ampersand connector */
+.template-royal .ampersand {
+  font-family: var(--font-serif) !important;
+  font-size: 1.8rem !important;
+  color: var(--color-gold-light) !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4) !important;
+}
+
+.template-royal .ampersand::before,
+.template-royal .ampersand::after {
+  background-color: var(--color-gold-light) !important;
+  opacity: 0.4 !important;
+}
+
+/* Date splitting styles */
+.template-royal .wedding-date {
+  color: var(--color-gold-dark) !important;
+  font-family: var(--font-sans) !important;
+  font-size: 0.72rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 4px !important;
+  text-transform: uppercase !important;
+  line-height: 1.7 !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4) !important;
+}
+
+.template-royal .wedding-date .date-day {
+  color: var(--color-gray-dark) !important;
+  font-size: 0.62rem !important;
+  letter-spacing: 5px !important;
+}
+
+.template-royal .wedding-date .date-main {
+  color: var(--color-gold-dark) !important;
+  font-size: 0.8rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 4px !important;
+}
+
+/* Venue style updates */
+.template-royal .wedding-venue {
+  color: #FAF6F0 !important;
+  font-family: var(--font-serif) !important;
+  font-size: 0.95rem !important;
+  font-weight: 400 !important;
+  font-style: italic !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4) !important;
+}
+
+.template-royal .wedding-footer-divider {
+  background-color: var(--color-gold-light) !important;
+  opacity: 0.4 !important;
+}
+
+/* Section decorations */
+.template-royal .section-title {
+  color: var(--color-gold-dark) !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.template-royal .section-tagline {
+  color: #FAF6F0 !important;
+  opacity: 0.9;
+}
+
+.template-royal .section-ornament {
+  color: var(--color-gold-light) !important;
+}
+
+/* Profile sections */
+.template-royal .profile-card h3 {
+  color: var(--color-gold-dark) !important;
+}
+
+.template-royal .profile-divider-symbol {
+  color: var(--color-gold-light) !important;
+  font-family: var(--font-serif) !important;
+  font-style: italic;
+}
+
+.template-royal .profile-img-frame {
+  background-color: #42030b !important;
+  border-color: rgba(223, 195, 132, 0.4) !important;
+}
+
+/* Detail card elements */
+.template-royal .detail-card {
+  background: #42030b !important;
+  border: 1px solid rgba(223, 195, 132, 0.2) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
+}
+
+.template-royal .detail-card h4 {
+  color: var(--color-gold-dark) !important;
+}
+
+.template-royal .detail-card p {
+  color: #FAF6F0 !important;
+}
+
+/* Maps & Navigation links button override */
+.template-royal .lux-map-btn {
+  background-color: #42030b !important;
+  color: var(--color-gold-dark) !important;
+  border-color: rgba(223, 195, 132, 0.4) !important;
+}
+
+.template-royal .lux-map-btn:hover {
+  background-color: var(--color-gold-dark) !important;
+  color: #42030b !important;
+  border-color: var(--color-gold-dark) !important;
+}
+
+/* Doa section stylings */
+.template-royal .doa-frame-decor {
+  border: 1px double rgba(223, 195, 132, 0.3) !important;
+  background-color: #42030b !important;
+}
+
+.template-royal .doa-title {
+  color: var(--color-gold-dark) !important;
+}
+
+.template-royal .doa-arabic {
+  color: var(--color-gold-dark) !important;
+}
+
+.template-royal .doa-translation {
+  color: #FAF6F0 !important;
+}
+
+.template-royal .doa-signoff {
+  color: var(--color-gold-light) !important;
+}
+
+/* RSVP call to action card */
+.template-royal .rsvp-cta-card {
+  background-color: #42030b !important;
+  border: 1px solid rgba(223, 195, 132, 0.25) !important;
+}
+
+.template-royal .rsvp-cta-title {
+  color: var(--color-gold-dark) !important;
+}
+
+.template-royal .lux-rsvp-trigger-btn {
+  background-color: var(--color-gold-dark) !important;
+  color: #42030b !important;
+}
+
+.template-royal .lux-rsvp-trigger-btn:hover {
+  background-color: #FAF6F0 !important;
+  color: #42030b !important;
+}
+
+.template-royal .lux-contact-trigger-btn {
+  border-color: var(--color-gold-light) !important;
+  color: var(--color-gold-light) !important;
+}
+
+.template-royal .lux-contact-trigger-btn:hover {
+  background-color: rgba(223, 195, 132, 0.1) !important;
+}
+
+/* Thank you closing segment */
+.template-royal .thank-you-monogram {
+  color: var(--color-gold-dark) !important;
+  font-family: var(--font-serif) !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important;
+}
+
+.template-royal .thank-you-message {
+  color: #FAF6F0 !important;
+}
+
+.template-royal .thank-you-date {
+  color: var(--color-gold-light) !important;
+}
+
+/* Indicator arrow */
+.template-royal .indicator-arrow {
+  color: var(--color-gold-light) !important;
+}
+
+.template-royal .indicator-text {
+  color: var(--color-gold-light) !important;
+  font-weight: 500;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 /* Template 3: Islamic Minimal overlay */
@@ -1751,5 +2058,99 @@ body.preview-mode .preview-watermark {
 
 .template-islamic .thank-you-date {
   color: #6B6B6B !important;
+}
+
+/* ==========================================================================
+   APPEARANCE CUSTOMIZER OVERRIDES
+   ========================================================================== */
+
+#invitation-container {
+  --heading-color: inherit;
+  --body-color: inherit;
+  --accent-color: inherit;
+  --text-shadow: none;
+  --overlay-opacity: 0;
+  --overlay-bg-color: 0, 0, 0;
+  --button-bg: inherit;
+  --button-border: inherit;
+  --button-text: inherit;
+}
+
+#invitation-container .groom-name,
+#invitation-container .bride-name,
+#invitation-container .section-title,
+#invitation-container .gate-monogram-title,
+#invitation-container .doa-title {
+  color: var(--heading-color) !important;
+}
+
+#invitation-container .wedding-venue,
+#invitation-container .profile-desc,
+#invitation-container .wedding-quote,
+#invitation-container .invitation-paragraph p,
+#invitation-container .quote-translation,
+#invitation-container .detail-card p,
+#invitation-container .doa-translation,
+#invitation-container .thank-you-message,
+#invitation-container .countdown-num,
+#invitation-container .wedding-date .date-day {
+  color: var(--body-color) !important;
+}
+
+#invitation-container .event-title,
+#invitation-container .ampersand,
+#invitation-container .section-tagline,
+#invitation-container .section-ornament,
+#invitation-container .countdown-subtitle,
+#invitation-container .countdown-label,
+#invitation-container .quote-arabic,
+#invitation-container .profile-name,
+#invitation-container .detail-card h4,
+#invitation-container .doa-arabic,
+#invitation-container .doa-signoff,
+#invitation-container .rsvp-cta-title,
+#invitation-container .wedding-date,
+#invitation-container .wedding-date .date-main {
+  color: var(--accent-color) !important;
+}
+
+#invitation-container .groom-name,
+#invitation-container .bride-name,
+#invitation-container .event-title,
+#invitation-container .wedding-date,
+#invitation-container .wedding-venue,
+#invitation-container .wedding-quote,
+#invitation-container .ampersand {
+  text-shadow: var(--text-shadow) !important;
+}
+
+#invitation-container .dynamic-text-container {
+  background: rgba(var(--overlay-bg-color), var(--overlay-opacity)) !important;
+  backdrop-filter: blur(calc(var(--overlay-opacity) * 12px)) !important;
+  -webkit-backdrop-filter: blur(calc(var(--overlay-opacity) * 12px)) !important;
+  padding: calc(var(--overlay-opacity) * 40px) calc(var(--overlay-opacity) * 28px) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, calc(var(--overlay-opacity) * 0.2)) !important;
+  transition: background 0.4s ease, backdrop-filter 0.4s ease, padding 0.4s ease, box-shadow 0.4s ease;
+}
+
+#invitation-container .lux-rsvp-trigger-btn,
+#invitation-container .gate-open-btn,
+#invitation-container .lux-map-btn,
+#invitation-container .luxury-floating-rsvp-btn,
+#invitation-container .lux-contact-trigger-btn {
+  background-color: var(--button-bg) !important;
+  border: 1px solid var(--button-border) !important;
+  color: var(--button-text) !important;
+  transition: var(--transition-smooth) !important;
+}
+
+#invitation-container .lux-rsvp-trigger-btn:hover,
+#invitation-container .gate-open-btn:hover,
+#invitation-container .lux-map-btn:hover,
+#invitation-container .luxury-floating-rsvp-btn:hover,
+#invitation-container .lux-contact-trigger-btn:hover {
+  filter: brightness(1.1) !important;
+  transform: translateY(-2px) !important;
 }
 

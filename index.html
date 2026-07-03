@@ -259,127 +259,268 @@
         </form>
       </div>
 
-      <!-- 3. MOCK PAYMENT VIEW -->
+      <!-- 3. PREMIUM MANUAL PAYMENT VIEW -->
       <div id="view-payment" class="creator-view hidden">
         <div class="form-back-nav">
           <a href="#create" class="btn-back-link">← Back to Details</a>
         </div>
 
-        <div class="payment-header">
-          <div class="brand-monogram">S</div>
-          <h2>Secure Checkout</h2>
-          <p>Host your premium digital wedding invitation. Ready instantly with RSVP tracking.</p>
+        <!-- STATE 1: MANUAL PAYMENT DETAILS FORM -->
+        <div id="payment-form-state" class="payment-card-layout">
+          <div class="payment-header-custom">
+            <span class="premium-badge">PUBLISHING PROCESS</span>
+            <h2 class="payment-title-custom">Complete Payment</h2>
+            <p class="payment-subtitle-custom">To publish your invitation, please complete the payment below.</p>
+          </div>
+
+          <div class="payment-summary-custom">
+            <span class="summary-label">Amount</span>
+            <span class="summary-amount">RM99</span>
+          </div>
+
+          <div class="premium-payment-card">
+            <!-- Payment Method Segment -->
+            <div class="payment-method-header">
+              <span class="method-icon">✦</span>
+              <span class="method-name">DuitNow QR</span>
+            </div>
+
+            <!-- QR code visual area -->
+            <div class="qr-container">
+              <!-- Try to load image. On error fallback to dashed placeholder box -->
+              <img src="/payment/duitnow-qr.jpeg" id="duitnow-qr-image" class="duitnow-qr-img hidden" alt="DuitNow QR" referrerpolicy="no-referrer" onload="this.classList.remove('hidden'); document.getElementById('qr-placeholder-box').classList.add('hidden');" onerror="this.classList.add('hidden'); document.getElementById('qr-placeholder-box').classList.remove('hidden');" />
+              
+              <div id="qr-placeholder-box" class="qr-placeholder-box">
+                <span class="qr-placeholder-icon">📷</span>
+                <span class="qr-placeholder-title">QR Code Placeholder</span>
+                <span class="qr-placeholder-text">Replace: /payment/duitnow-qr.jpeg</span>
+              </div>
+            </div>
+
+            <!-- Divider with custom luxury ornament -->
+            <div class="premium-divider">
+              <span class="divider-line"></span>
+              <span class="divider-ornament">✦</span>
+              <span class="divider-line"></span>
+            </div>
+
+            <!-- Bank Details Segment -->
+            <div class="bank-details-section">
+              <h4 class="section-subtitle-custom">Bank Transfer Details</h4>
+              
+              <div class="bank-detail-row">
+                <span class="bank-label">Bank</span>
+                <span class="bank-value font-semibold">GX Bank</span>
+              </div>
+              
+              <div class="bank-detail-row">
+                <span class="bank-label">Account Name</span>
+                <span class="bank-value font-semibold">SITI AISYAH</span>
+              </div>
+              
+              <div class="bank-detail-row">
+                <span class="bank-label">Account Number</span>
+                <div class="account-number-wrapper">
+                  <span id="bank-acc-num" class="bank-value font-mono font-semibold">8888-00561901-0</span>
+                  <button type="button" id="btn-copy-acc" class="btn-copy-icon" aria-label="Copy Account Number">
+                    <span class="copy-label">Copy</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Receipt Uploader -->
+            <div class="receipt-uploader-section">
+              <h4 class="section-subtitle-custom">Upload Receipt</h4>
+              
+              <div id="receipt-dropzone" class="receipt-dropzone">
+                <input type="file" id="receipt-file-input" accept="image/*,.pdf" class="hidden" />
+                <div id="dropzone-prompt" class="dropzone-prompt">
+                  <span class="upload-icon">📷</span>
+                  <p class="upload-title">Upload Receipt (JPG, PNG, PDF)</p>
+                  <p class="upload-subtext">Drag and drop file here, or click to choose</p>
+                </div>
+                
+                <div id="dropzone-file-selected" class="dropzone-file-selected hidden">
+                  <span class="selected-file-icon">✓</span>
+                  <div class="selected-file-info">
+                    <p id="selected-file-name" class="selected-file-name">receipt.pdf</p>
+                    <p id="selected-file-size" class="selected-file-size">124 KB</p>
+                  </div>
+                  <button type="button" id="btn-remove-file" class="btn-remove-file" aria-label="Remove File">&times;</button>
+                </div>
+              </div>
+              <p id="receipt-error" class="receipt-error-text hidden">Please select a valid receipt file (JPG, PNG, PDF).</p>
+            </div>
+
+            <!-- Pay Button -->
+            <button type="button" id="btn-submit-payment" class="btn-submit-payment">
+              <span>I Have Made Payment</span>
+            </button>
+          </div>
         </div>
 
-        <div class="payment-summary">
-          <div class="summary-row">
-            <span>Premium Invitation Lifetime Hosting License</span>
-            <span class="font-bold">RM 99</span>
-          </div>
-          <div class="summary-row text-xs text-gray-muted">
-            <span>Selected Design Theme, Custom Music, RSVP Exports</span>
-            <span>Free</span>
-          </div>
-          <div class="summary-row total-row">
-            <span>Total to Pay</span>
-            <span>RM 99</span>
-          </div>
-        </div>
+        <!-- STATE 2: CONFIRMATION PAGE -->
+        <div id="payment-confirmation-state" class="payment-card-layout hidden">
+          <div class="confirmation-premium-card">
+            <div class="confirmation-heart-icon">❤️</div>
+            <h2 class="confirmation-title">Thank You</h2>
+            <p class="confirmation-subtitle">Your payment receipt has been received successfully.</p>
+            
+            <div class="confirmation-box">
+              <p class="confirmation-body-text">Our team will verify your payment shortly.</p>
+              <p class="confirmation-sub-text">Once approved, your invitation will automatically become LIVE.</p>
+            </div>
 
-        <!-- CHIP Hosted Payment Flow Concept -->
-        <div id="payment-flow-container" class="payment-flow-container">
-          
-          <!-- STATE 1: Hosted Payment Overview (replaces fake card form) -->
-          <div id="payment-start-state" class="payment-state">
-            <div class="hosted-payment-card">
-              <div class="chip-badge-logo">
-                <span class="chip-dot">●</span> CHIP Hosted Checkout
-              </div>
-              
-              <p class="payment-explain-text">
-                Publishing your premium invitation is secure and instant. You will be redirected to the secure <strong>CHIP Payment Gateway</strong> to complete your purchase using FPX Online Banking, Credit Card, or e-Wallets.
-              </p>
-              
-              <div class="fpx-icon-strip">
-                <span class="bank-pill">FPX</span>
-                <span class="bank-pill">Visa</span>
-                <span class="bank-pill">Mastercard</span>
-                <span class="bank-pill">e-Wallet</span>
-              </div>
-              
-              <div class="payment-note-box">
-                💡 No credit card or bank credentials are collected within this application. All transactions occur securely on CHIP's hosted gateway screen.
-              </div>
+            <div class="status-banner">
+              <span class="status-label">Current Status</span>
+              <span class="status-value font-semibold">🟡 Waiting for Approval</span>
+            </div>
 
-              <!-- This button triggers State 2 (Loading) and creates the pending order -->
-              <button id="btn-publish-pay" class="payment-btn">
-                Publish — RM99
+            <div class="confirmation-actions">
+              <button type="button" id="btn-reset-payment-state" class="btn-secondary-custom">
+                Submit Another Receipt
               </button>
-              
-              <div class="payment-trust-badge">
-                🔒 Sandbox Integration Environment
+              <a href="#create" class="btn-primary-custom">
+                Edit Details
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 4. ADMIN DASHBOARD VIEW -->
+      <div id="view-admin" class="creator-view hidden">
+        <div class="form-back-nav">
+          <a href="#home" class="btn-back-link">← Back to Home</a>
+        </div>
+
+        <!-- Admin Login Panel -->
+        <div id="admin-login-panel" class="payment-card-layout">
+          <div class="payment-header-custom">
+            <span class="premium-badge">SHE.CO WORKSPACE</span>
+            <h2 class="payment-title-custom">Admin Console</h2>
+            <p class="payment-subtitle-custom">Please authenticate with your administrator credentials.</p>
+          </div>
+
+          <div class="premium-payment-card" style="padding: 24px;">
+            <div class="receipt-uploader-section">
+              <div class="form-field" style="margin-bottom:12px; text-align: left;">
+                <label for="admin-email" style="font-family: var(--font-sans); font-size: 0.65rem; font-weight: 600; text-transform: uppercase; color: var(--color-gray-dark); letter-spacing: 1px; display: block; margin-bottom: 4px;">Email Address</label>
+                <input type="email" id="admin-email" placeholder="admin@sheco.me" style="width:100%; padding:10px; border:1px solid rgba(168,147,109,0.25); border-radius:6px; font-family:var(--font-sans); font-size:0.75rem; background: var(--color-cream);" />
               </div>
+              <div class="form-field" style="text-align: left;">
+                <label for="admin-password" style="font-family: var(--font-sans); font-size: 0.65rem; font-weight: 600; text-transform: uppercase; color: var(--color-gray-dark); letter-spacing: 1px; display: block; margin-bottom: 4px;">Password</label>
+                <input type="password" id="admin-password" placeholder="••••••••" style="width:100%; padding:10px; border:1px solid rgba(168,147,109,0.25); border-radius:6px; font-family:var(--font-sans); font-size:0.75rem; background: var(--color-cream);" />
+              </div>
+            </div>
+            
+            <button type="button" id="btn-admin-login" class="btn-submit-payment" style="margin-top:12px;">
+              <span>Authenticate</span>
+            </button>
+            <p id="admin-login-error" class="receipt-error-text hidden" style="text-align:center; color:#ef4444; font-size:0.65rem; margin-top:8px;">Authentication failed.</p>
+          </div>
+        </div>
+
+        <!-- Admin Dashboard Panel (Main) -->
+        <div id="admin-dashboard-panel" class="payment-card-layout hidden" style="max-width: 500px;">
+          <div class="payment-header-custom" style="margin-bottom: 16px;">
+            <span class="premium-badge">MANAGEMENT CENTRE</span>
+            <h2 class="payment-title-custom">Admin Dashboard</h2>
+            <p class="payment-subtitle-custom">Oversee and verify active digital wedding registrations.</p>
+          </div>
+
+          <!-- Summary Cards Grid -->
+          <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:10px; margin-bottom:20px;">
+            <div style="background:#fff; border:1px solid rgba(168,147,109,0.15); border-radius:12px; padding:12px 6px; text-align:center; box-shadow:var(--shadow-ambient);">
+              <p style="font-family:var(--font-sans); font-size:0.55rem; font-weight:600; text-transform:uppercase; color:var(--color-gray-dark); margin-bottom:4px; letter-spacing: 0.5px;">Revenue</p>
+              <h3 id="stat-revenue" style="font-family:var(--font-display); font-size:1.15rem; font-weight:600; color:var(--color-gold-dark);">RM0</h3>
+            </div>
+            <div style="background:#fff; border:1px solid rgba(168,147,109,0.15); border-radius:12px; padding:12px 6px; text-align:center; box-shadow:var(--shadow-ambient);">
+              <p style="font-family:var(--font-sans); font-size:0.55rem; font-weight:600; text-transform:uppercase; color:var(--color-gray-dark); margin-bottom:4px; letter-spacing: 0.5px;">Pending</p>
+              <h3 id="stat-pending" style="font-family:var(--font-display); font-size:1.15rem; font-weight:600; color:#b08d57;">0</h3>
+            </div>
+            <div style="background:#fff; border:1px solid rgba(168,147,109,0.15); border-radius:12px; padding:12px 6px; text-align:center; box-shadow:var(--shadow-ambient);">
+              <p style="font-family:var(--font-sans); font-size:0.55rem; font-weight:600; text-transform:uppercase; color:var(--color-gray-dark); margin-bottom:4px; letter-spacing: 0.5px;">Published</p>
+              <h3 id="stat-published" style="font-family:var(--font-display); font-size:1.15rem; font-weight:600; color:#52b788;">0</h3>
             </div>
           </div>
 
-          <!-- STATE 2: Payment Loading Screen -->
-          <div id="payment-loading-state" class="payment-state hidden">
-            <div class="payment-loading-card">
-              <div class="loading-spinner-container">
-                <div class="payment-spinner"></div>
-              </div>
-              <h3>Connecting to CHIP...</h3>
-              <p>Preparing your hosted payment gateway session securely. Please do not close or refresh this page.</p>
-              <span class="loading-hint">Initializing secure POST request /api/payments/create...</span>
+          <!-- Orders Section -->
+          <div class="premium-payment-card" style="padding:20px; text-align: left;">
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(168,147,109,0.1); padding-bottom:8px; margin-bottom:12px;">
+              <span class="method-name" style="font-size: 0.75rem;">Recent Orders</span>
+              <button type="button" id="btn-admin-logout" style="background:none; border:none; color:var(--color-gray-dark); font-family:var(--font-sans); font-size:0.6rem; text-transform:uppercase; cursor:pointer; letter-spacing:1px; font-weight: 600;">Sign Out</button>
+            </div>
+
+            <!-- Scrollable orders list to keep clean container width -->
+            <div id="admin-orders-list" style="display:flex; flex-direction:column; gap:14px; max-height:400px; overflow-y:auto; padding-right:4px;">
+              <p style="font-family:var(--font-sans); font-size:0.7rem; color:var(--color-gray-dark); text-align:center; padding:20px 0;">Loading orders...</p>
             </div>
           </div>
 
-          <!-- STATE 3: CHIP Hosted Checkout Simulation -->
-          <div id="payment-simulation-state" class="payment-state hidden">
-            <div class="chip-gateway-container">
-              <div class="chip-gateway-header">
-                <div class="chip-logo">CHIP SECURE PAY</div>
-                <div class="secure-indicator">🔒 256-bit SSL</div>
+          <!-- Templates Management Section -->
+          <div class="premium-payment-card" style="padding:20px; text-align: left; margin-top: 20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(168,147,109,0.1); padding-bottom:8px; margin-bottom:12px;">
+              <span class="method-name" style="font-size: 0.75rem;">Manage Templates</span>
+              <button type="button" id="btn-admin-add-template-toggle" style="background:var(--color-gold); border:none; color:var(--color-text); font-family:var(--font-sans); padding:3px 8px; border-radius:4px; font-size:0.55rem; text-transform:uppercase; cursor:pointer; letter-spacing:1px; font-weight: 600;">+ Add Template</button>
+            </div>
+
+            <!-- Add/Edit Template form inline (Hidden by default) -->
+            <form id="admin-template-form" class="hidden" style="display:flex; flex-direction:column; gap:8px; margin-bottom:16px; background:#f7f5f0; padding:12px; border-radius:6px; border:1px solid rgba(168,147,109,0.25);">
+              <h4 id="admin-template-form-title" style="font-family:var(--font-display); font-size:0.7rem; font-weight:600; margin-bottom:4px;">Add New Template</h4>
+              <input type="hidden" id="admin-tpl-edit-id" />
+              
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                <div>
+                  <label style="font-family:var(--font-sans); font-size:0.55rem; font-weight:600; text-transform:uppercase; color:var(--color-gray-dark);">Template ID</label>
+                  <input type="text" id="admin-tpl-id" placeholder="e.g. royal" required style="width:100%; padding:6px; font-size:0.65rem; border:1px solid rgba(168,147,109,0.2); border-radius:4px; background:#fff;" />
+                </div>
+                <div>
+                  <label style="font-family:var(--font-sans); font-size:0.55rem; font-weight:600; text-transform:uppercase; color:var(--color-gray-dark);">Name</label>
+                  <input type="text" id="admin-tpl-name" placeholder="e.g. Royal Malay" required style="width:100%; padding:6px; font-size:0.65rem; border:1px solid rgba(168,147,109,0.2); border-radius:4px; background:#fff;" />
+                </div>
               </div>
               
-              <div class="gateway-order-summary">
-                <div class="summary-line">
-                  <span class="label">Merchant</span>
-                  <span class="value font-medium">She.Co Digital Invitation</span>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                <div>
+                  <label style="font-family:var(--font-sans); font-size:0.55rem; font-weight:600; text-transform:uppercase; color:var(--color-gray-dark);">Price</label>
+                  <input type="text" id="admin-tpl-price" placeholder="e.g. RM 99" required style="width:100%; padding:6px; font-size:0.65rem; border:1px solid rgba(168,147,109,0.2); border-radius:4px; background:#fff;" />
                 </div>
-                <div class="summary-line">
-                  <span class="label">Order Ref</span>
-                  <span class="value" id="chip-sim-order-id">order_284910</span>
-                </div>
-                <div class="summary-line total">
-                  <span class="label">Amount Due</span>
-                  <span class="value amount">RM 99.00</span>
+                <div>
+                  <label style="font-family:var(--font-sans); font-size:0.55rem; font-weight:600; text-transform:uppercase; color:var(--color-gray-dark);">Version</label>
+                  <input type="number" id="admin-tpl-version" value="1" required style="width:100%; padding:6px; font-size:0.65rem; border:1px solid rgba(168,147,109,0.2); border-radius:4px; background:#fff;" />
                 </div>
               </div>
-              
-              <div class="gateway-action-container">
-                <p class="sim-alert-text">
-                  This is a simulated CHIP Hosted Checkout page representing the external gateway view.
-                </p>
-                
-                <!-- This button completes the transaction, sets "paid", removes watermark & opens live link -->
-                <button id="btn-simulate-success" class="gateway-btn-success">
-                  Simulate CHIP Payment Success
-                </button>
-                
-                <button id="btn-simulate-cancel" class="gateway-btn-cancel">
-                  Cancel &amp; Return to Merchant
-                </button>
+
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                <div>
+                  <label style="font-family:var(--font-sans); font-size:0.55rem; font-weight:600; text-transform:uppercase; color:var(--color-gray-dark);">Folder Name</label>
+                  <input type="text" id="admin-tpl-folder" placeholder="e.g. royal" required style="width:100%; padding:6px; font-size:0.65rem; border:1px solid rgba(168,147,109,0.2); border-radius:4px; background:#fff;" />
+                </div>
+                <div>
+                  <label style="font-family:var(--font-sans); font-size:0.55rem; font-weight:600; text-transform:uppercase; color:var(--color-gray-dark);">Status</label>
+                  <select id="admin-tpl-status" style="width:100%; padding:6px; font-size:0.65rem; border:1px solid rgba(168,147,109,0.2); border-radius:4px; background:#fff; height: 26px;">
+                    <option value="active">Active</option>
+                    <option value="disabled">Disabled</option>
+                  </select>
+                </div>
               </div>
-              
-              <div class="gateway-footer">
-                Powered by CHIP. Secure payments for Malaysia and SE Asia.
+
+              <div style="display:flex; gap:6px; margin-top:6px;">
+                <button type="submit" id="btn-save-template" style="flex-grow:1; background:#52b788; color:white; border:none; padding:6px; border-radius:4px; font-size:0.6rem; font-weight:600; cursor:pointer;">Save Template</button>
+                <button type="button" id="btn-cancel-template" style="background:#ef4444; color:white; border:none; padding:6px 12px; border-radius:4px; font-size:0.6rem; font-weight:600; cursor:pointer;">Cancel</button>
               </div>
+            </form>
+
+            <div id="admin-templates-list" style="display:flex; flex-direction:column; gap:10px; max-height:400px; overflow-y:auto; padding-right:4px;">
+              <p style="font-family:var(--font-sans); font-size:0.7rem; color:var(--color-gray-dark); text-align:center; padding:20px 0;">Loading templates...</p>
             </div>
           </div>
-
         </div>
       </div>
+
     </div>
 
     <!-- Main App Container Centered on Desktop (Max-width 430px mobile frame) -->
@@ -648,6 +789,10 @@
               <button id="section-contact-trigger" class="lux-contact-trigger-btn" data-target="modal-contact">
                 <span>Contact Family</span>
               </button>
+
+              <button id="section-share-trigger" class="lux-contact-trigger-btn" style="margin-top: 10px; background: transparent; border: 1px solid var(--color-gold-dark);">
+                <span>Share Invitation</span>
+              </button>
             </div>
           </div>
         </section>
@@ -785,6 +930,12 @@
 
       </div>
     </main>
+
+    <!-- Elegant Dynamic Toast Container -->
+    <div id="toast-container" class="toast-container hidden">
+      <span class="toast-icon">✦</span>
+      <span id="toast-message" class="toast-message">Account number copied.</span>
+    </div>
 
     <!-- Vanilla Javascript Reference -->
     <script type="module" src="./src/js/app.js"></script>

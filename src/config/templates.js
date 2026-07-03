@@ -22,6 +22,15 @@ export const templates = {
       gold: "#dfc384",
       text: "#2d2a26",
       muted: "#8c7251"
+    },
+    appearanceDefaults: {
+      preset: "designer",
+      headingColor: "#2d2a26",
+      bodyColor: "#6e6962",
+      accentColor: "#a8936d",
+      textShadow: false,
+      overlayOpacity: 0.0,
+      buttonStyle: "filled"
     }
   },
   royal: {
@@ -46,6 +55,15 @@ export const templates = {
       gold: "#dfc384",
       text: "#131211",
       muted: "#a8936d"
+    },
+    appearanceDefaults: {
+      preset: "designer",
+      headingColor: "#f5d77f",
+      bodyColor: "#FAF6F0",
+      accentColor: "#dfc384",
+      textShadow: true,
+      overlayOpacity: 0.25,
+      buttonStyle: "filled"
     }
   },
   islamic: {
@@ -70,6 +88,15 @@ export const templates = {
       gold: "#C6A964",
       text: "#1F1F1F",
       muted: "#6B6B6B"
+    },
+    appearanceDefaults: {
+      preset: "designer",
+      headingColor: "#3E5F4F",
+      bodyColor: "#6B6B6B",
+      accentColor: "#C6A964",
+      textShadow: false,
+      overlayOpacity: 0.0,
+      buttonStyle: "outline"
     }
   }
 };

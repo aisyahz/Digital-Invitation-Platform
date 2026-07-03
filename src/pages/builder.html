@@ -74,6 +74,57 @@
       <span class="field-hint">Leave default for our curated acoustic wedding guitar &amp; piano ballad</span>
     </div>
 
+    <div class="form-section-title">🎨 Appearance</div>
+    
+    <div class="form-field">
+      <label for="form-appearance-preset">Style Preset</label>
+      <select id="form-appearance-preset">
+        <option value="designer">Designer Recommended</option>
+        <option value="light">Light Text</option>
+        <option value="dark">Dark Text</option>
+        <option value="gold">Gold Text</option>
+        <option value="custom">Custom</option>
+      </select>
+      <span class="field-hint">Choose a pre-designed appearance preset or customize colors manually</span>
+    </div>
+
+    <div class="form-grid" id="appearance-custom-fields">
+      <div class="form-field">
+        <label for="form-appearance-heading">Heading Color</label>
+        <input type="color" id="form-appearance-heading" value="#2d2a26" />
+      </div>
+      <div class="form-field">
+        <label for="form-appearance-body">Body Text Color</label>
+        <input type="color" id="form-appearance-body" value="#6e6962" />
+      </div>
+      <div class="form-field">
+        <label for="form-appearance-accent">Accent Color</label>
+        <input type="color" id="form-appearance-accent" value="#a8936d" />
+      </div>
+      <div class="form-field" style="justify-content: center; align-items: flex-start; padding-top: 8px;">
+        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; text-transform: none; font-size: 0.72rem; font-weight: 500; color: var(--color-charcoal);">
+          <input type="checkbox" id="form-appearance-shadow" style="width: 18px; height: 18px; accent-color: var(--color-gold-dark); cursor: pointer;" />
+          <span>Enable soft text shadow</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="form-grid">
+      <div class="form-field">
+        <label for="form-appearance-overlay">Background Overlay: <span id="form-appearance-overlay-val">0%</span></label>
+        <input type="range" id="form-appearance-overlay" min="0" max="70" value="0" />
+        <span class="field-hint">Adds a soft overlay behind the text area for better readability</span>
+      </div>
+      <div class="form-field">
+        <label for="form-appearance-btn-style">Button Style</label>
+        <select id="form-appearance-btn-style">
+          <option value="filled">Filled</option>
+          <option value="outline">Outline</option>
+        </select>
+        <span class="field-hint">Controls the styling of call-to-action buttons</span>
+      </div>
+    </div>
+
     <button type="submit" class="form-submit-btn">Preview Your Invitation</button>
   </form>
 </div>

@@ -1,3 +1,6 @@
+import { rsvpService } from '../services/rsvp.service.js';
+import { invitationService } from '../services/invitation.service.js';
+
 /**
  * Handles RSVP submission verification.
  */
@@ -6,7 +9,7 @@ export function setupRSVPForm() {
   const successState = document.getElementById("rsvp-success");
 
   if (form && successState) {
-    form.addEventListener("submit", (e) => {
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
       const formData = new FormData(form);
@@ -16,18 +19,53 @@ export function setupRSVPForm() {
       const attendance = formData.get("attendance");
       const message = formData.get("message") || "";
 
-      console.log("👰 WEDDING RSVP RESPONSE RECEIVED 🤵");
-      console.log("-----------------------------------------");
-      console.log(`👤 Name:               ${name}`);
-      console.log(`📞 Phone Number:       ${phone}`);
-      console.log(`👥 Number of Guests:   ${guests}`);
-      console.log(`📌 Attendance Status:  ${attendance}`);
-      console.log(`💌 Message/Wish:       ${message}`);
-      console.log("-----------------------------------------");
+      const submitBtn = form.querySelector("button[type='submit']");
+      const originalText = submitBtn ? submitBtn.textContent : "Submit RSVP";
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Submitting...";
+      }
 
-      form.classList.add("hidden");
-      successState.classList.remove("hidden");
-      form.reset();
+      try {
+        const activeId = window.activeInvitationId || 'preview-demo-id';
+
+        // 1. Submit RSVP entry to Supabase rsvps table
+        await rsvpService.submitRSVP({
+          invitation_id: activeId,
+          name: name,
+          phone: phone,
+          attendance: attendance === 'Attending' ? 'yes' : 'no',
+          pax: parseInt(guests) || 2,
+          message: message
+        });
+
+        // 2. Submit congratulatory well-wishes if entered
+        if (message.trim()) {
+          await rsvpService.submitGuestMessage({
+            invitation_id: activeId,
+            guest_name: name,
+            message: message
+          });
+        }
+
+        // 3. Increment RSVP count analytic
+        if (activeId !== 'preview-demo-id') {
+          await invitationService.trackEvent(activeId, 'rsvp_count');
+        }
+
+        form.classList.add("hidden");
+        successState.classList.remove("hidden");
+        form.reset();
+
+      } catch (err) {
+        console.error("RSVP Submission failed:", err);
+        alert("Failed to submit RSVP. Please try again.");
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalText;
+        }
+      }
     });
   }
 
