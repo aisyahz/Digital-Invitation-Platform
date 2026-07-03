@@ -80,7 +80,7 @@
 
 
 /* ==========================================================================
-   SHE.CO DIGITAL INVITATION BRAND HOMEPAGE & CREATOR FLOW STYLES
+   KADKITA BRAND HOMEPAGE & CREATOR FLOW STYLES
    ========================================================================== */
 
 /* Unified Creator Mobile-First Frame */
@@ -146,4 +146,307 @@
   color: var(--color-charcoal);
   text-indent: 4px;
 }
+
+/* ==========================================================================
+   HOMEPAGE HAMBURGER MENU & DROPDOWN NAVIGATION
+   ========================================================================== */
+.creator-header {
+  position: relative; /* Context for absolute positioning of hamburger */
+}
+
+.menu-toggle-btn {
+  position: absolute;
+  right: 24px;
+  top: 36px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 22px;
+  height: 16px;
+  padding: 0;
+  z-index: 1000;
+}
+
+.menu-toggle-btn .hamburger-bar {
+  width: 100%;
+  height: 2px;
+  background-color: var(--color-charcoal);
+  border-radius: 1px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Open state transformation for hamburger */
+.menu-toggle-btn.open .hamburger-bar:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.menu-toggle-btn.open .hamburger-bar:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.menu-toggle-btn.open .hamburger-bar:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Slide-down Dropdown Menu Layout */
+.dropdown-menu {
+  width: 100%;
+  background-color: var(--color-cream);
+  border-bottom: 1px solid var(--color-cream-dark);
+  box-shadow: 0 12px 36px rgba(168, 147, 109, 0.12);
+  z-index: 999;
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 8px 0;
+  margin-top: 12px;
+}
+
+.dropdown-menu.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  display: block !important;
+}
+
+.dropdown-menu.hidden {
+  display: none;
+}
+
+.menu-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.menu-list li {
+  width: 100%;
+  text-align: center;
+}
+
+.menu-item-link {
+  display: block;
+  padding: 12px 20px;
+  color: var(--color-charcoal);
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  transition: color 0.25s ease, background-color 0.25s ease;
+}
+
+.menu-item-link:hover {
+  color: var(--color-gold-dark);
+  background-color: rgba(168, 147, 109, 0.05);
+}
+
+.menu-item-link:active {
+  background-color: rgba(168, 147, 109, 0.1);
+}
+
+/* ==========================================================================
+   PHOTO UPLOAD COMPONENT (BUILDER)
+   ========================================================================== */
+.photo-upload-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.photo-upload-input {
+  display: none !important;
+}
+
+.photo-upload-preview-container {
+  width: 100%;
+  height: 180px;
+  background-color: var(--color-white);
+  border: 1px dashed rgba(168, 147, 109, 0.35);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  transition: border-color 0.25s ease, background-color 0.25s ease;
+}
+
+.photo-upload-preview-container:hover {
+  border-color: var(--color-gold-dark);
+  background-color: rgba(168, 147, 109, 0.03);
+}
+
+.photo-upload-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--color-gray-dark);
+  text-align: center;
+  padding: 20px;
+}
+
+.photo-upload-placeholder .upload-icon {
+  font-size: 1.4rem;
+}
+
+.photo-upload-placeholder .upload-text {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.photo-upload-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ==========================================================================
+   OUR MOMENT INVITATION SECTION
+   ========================================================================== */
+.our-moment-section {
+  background-color: var(--color-cream);
+  padding: 60px 0;
+}
+
+.portrait-frame-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 24px;
+}
+
+.portrait-photo-frame {
+  width: 240px;
+  height: 340px;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-gold-light);
+  box-shadow: var(--shadow-luxury);
+  padding: 12px;
+  border-radius: 4px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.couple-photo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 2px;
+  border: 1px solid rgba(168, 147, 109, 0.15);
+}
+
+.couple-photo-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--color-gray-dark);
+  text-align: center;
+  padding: 20px;
+}
+
+.couple-photo-placeholder .placeholder-icon {
+  font-size: 1.8rem;
+  opacity: 0.6;
+}
+
+.couple-photo-placeholder .placeholder-text {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Dynamic Brand Logo & Homepage Banner Styling */
+.brand-logo-img {
+  max-height: 44px;
+  max-width: 180px;
+  object-fit: contain;
+  margin-bottom: 2px;
+}
+
+.home-banner-wrapper {
+  width: 100%;
+  padding: 0;
+  margin: 18px 0 22px;
+}
+
+.home-banner-container {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background-color: var(--color-cream-dark);
+  border: 1px solid var(--color-gold-light);
+  border-radius: 8px;
+  box-shadow: var(--shadow-luxury);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.home-banner-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 8px;
+  padding: 16px;
+  color: var(--color-gray-dark);
+}
+
+.banner-placeholder-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--color-charcoal);
+  letter-spacing: 1px;
+}
+
+.banner-placeholder-sub {
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  line-height: 1.4;
+  opacity: 0.85;
+}
+
+.home-hero-note {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--color-gray-dark);
+  text-align: center;
+  margin-top: 16px;
+  letter-spacing: 0.5px;
+  line-height: 1.4;
+}
+
+
 

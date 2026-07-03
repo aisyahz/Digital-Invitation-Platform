@@ -14,7 +14,8 @@ export function setupRouting() {
 }
 
 export async function handleRoute() {
-  const hash = window.location.hash || "#home";
+  let hash = window.location.hash || "#home";
+  hash = hash.replace("#/", "#");
   
   const creatorContainer = document.getElementById("creator-container");
   const invitationContainer = document.getElementById("invitation-container");
@@ -210,6 +211,37 @@ function prefillFormFields() {
   for (const [id, value] of Object.entries(fields)) {
     const el = document.getElementById(id);
     if (el) el.value = value;
+  }
+
+  // Pre-fill couple photo if exists
+  const photoPreview = document.getElementById("form-couple-photo-preview");
+  const photoPlaceholder = document.getElementById("form-couple-photo-placeholder");
+  const photoContainer = document.querySelector(".photo-upload-preview-container");
+  if (details.couplePhoto && details.couplePhoto.dataUrl) {
+    if (photoPreview) {
+      photoPreview.src = details.couplePhoto.dataUrl;
+      photoPreview.classList.remove("hidden");
+    }
+    if (photoPlaceholder) {
+      photoPlaceholder.classList.add("hidden");
+    }
+    if (photoContainer) {
+      photoContainer.setAttribute("data-url", details.couplePhoto.dataUrl);
+      photoContainer.setAttribute("data-filename", details.couplePhoto.fileName || "");
+    }
+  } else {
+    // Reset photo preview and container data elements
+    if (photoPreview) {
+      photoPreview.src = "";
+      photoPreview.classList.add("hidden");
+    }
+    if (photoPlaceholder) {
+      photoPlaceholder.classList.remove("hidden");
+    }
+    if (photoContainer) {
+      photoContainer.removeAttribute("data-url");
+      photoContainer.removeAttribute("data-filename");
+    }
   }
 
   // Refresh appearance customizer settings inside builder form

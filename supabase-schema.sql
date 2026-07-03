@@ -1,5 +1,5 @@
 -- ========================================================
--- SHE.CO SUPABASE DATABASE SCHEMA
+-- KADKITA SUPABASE DATABASE SCHEMA
 -- ========================================================
 
 -- Enable UUID extension

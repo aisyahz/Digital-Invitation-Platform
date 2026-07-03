@@ -8,9 +8,13 @@ import { renderTemplateGallery } from './gallery.js';
 import { getSelectedTemplate, saveActiveDetails } from './storage.js';
 import { defaultInvitation } from '../config/constants.js';
 import { setupAppearanceController } from './appearance.js';
+import { appConfig } from '../config/app.config.js';
 
 // Initialize and bind events on DOM load
 document.addEventListener("DOMContentLoaded", () => {
+  // Apply dynamic app configuration first
+  applyAppConfig();
+
   // Render the Dynamic template gallery
   renderTemplateGallery();
 
@@ -47,6 +51,129 @@ function setupHomepageFlow() {
     });
   }
 
+  // 1.1 Hamburg Menu Toggle and Dropdown Control
+  const menuToggleBtn = document.getElementById("menu-toggle-btn");
+  const dropdownMenu = document.getElementById("dropdown-menu");
+  if (menuToggleBtn && dropdownMenu) {
+    menuToggleBtn.addEventListener("click", () => {
+      const isClosed = dropdownMenu.classList.contains("hidden") || !dropdownMenu.classList.contains("show");
+      if (isClosed) {
+        menuToggleBtn.classList.add("open");
+        dropdownMenu.classList.remove("hidden");
+        // force reflow
+        dropdownMenu.offsetHeight;
+        dropdownMenu.classList.add("show");
+      } else {
+        menuToggleBtn.classList.remove("open");
+        dropdownMenu.classList.remove("show");
+        setTimeout(() => {
+          if (!dropdownMenu.classList.contains("show")) {
+            dropdownMenu.classList.add("hidden");
+          }
+        }, 300);
+      }
+    });
+
+    // Dismiss menu when links clicked
+    const menuLinks = dropdownMenu.querySelectorAll(".menu-item-link");
+    menuLinks.forEach(link => {
+      link.addEventListener("click", () => {
+        menuToggleBtn.classList.remove("open");
+        dropdownMenu.classList.remove("show");
+        dropdownMenu.classList.add("hidden");
+      });
+    });
+  }
+
+  // 1.1.5 Smooth Scrolling to templates-section
+  const scrollToTemplates = document.getElementById("scroll-to-templates");
+  if (scrollToTemplates) {
+    scrollToTemplates.addEventListener("click", (e) => {
+      e.preventDefault();
+      const target = document.getElementById("templates-section");
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth" });
+      }
+    });
+  }
+
+  // 1.2 Couple Photo Drag and Drop + File Upload Interactive Controls
+  const photoContainer = document.querySelector(".photo-upload-preview-container");
+  const photoInput = document.getElementById("form-couple-photo");
+  const photoPreview = document.getElementById("form-couple-photo-preview");
+  const photoPlaceholder = document.getElementById("form-couple-photo-placeholder");
+  const photoWarning = document.getElementById("photo-upload-warning");
+
+  if (photoContainer && photoInput) {
+    // Click area triggers file input selection
+    photoContainer.addEventListener("click", (e) => {
+      // Prevent recursion if input itself was clicked/triggered
+      if (e.target !== photoInput) {
+        photoInput.click();
+      }
+    });
+
+    // Drag over handlers
+    photoContainer.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      photoContainer.style.borderColor = "var(--color-gold-dark)";
+      photoContainer.style.backgroundColor = "rgba(168, 147, 109, 0.05)";
+    });
+
+    photoContainer.addEventListener("dragleave", () => {
+      photoContainer.style.borderColor = "";
+      photoContainer.style.backgroundColor = "";
+    });
+
+    photoContainer.addEventListener("drop", (e) => {
+      e.preventDefault();
+      photoContainer.style.borderColor = "";
+      photoContainer.style.backgroundColor = "";
+      
+      const file = e.dataTransfer.files[0];
+      if (file && file.type.startsWith("image/")) {
+        handlePhotoFile(file);
+      }
+    });
+
+    photoInput.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        handlePhotoFile(file);
+      }
+    });
+
+    function handlePhotoFile(file) {
+      // 2MB size check (2 * 1024 * 1024 bytes)
+      if (file.size > 2 * 1024 * 1024) {
+        if (photoWarning) {
+          photoWarning.classList.remove("hidden");
+        }
+        photoInput.value = "";
+        return;
+      }
+
+      if (photoWarning) {
+        photoWarning.classList.add("hidden");
+      }
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const dataUrl = event.target.result;
+        if (photoPreview) {
+          photoPreview.src = dataUrl;
+          photoPreview.classList.remove("hidden");
+        }
+        if (photoPlaceholder) {
+          photoPlaceholder.classList.add("hidden");
+        }
+        photoContainer.setAttribute("data-url", dataUrl);
+        photoContainer.setAttribute("data-filename", file.name);
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
   // 2. Form submission for wedding details
   const creatorForm = document.getElementById("creator-form");
   if (creatorForm) {
@@ -72,6 +199,10 @@ function setupHomepageFlow() {
         buttonStyle: btnStyleSelect ? btnStyleSelect.value : "filled"
       };
 
+      const pContainer = document.querySelector(".photo-upload-preview-container");
+      const couplePhotoUrl = pContainer ? pContainer.getAttribute("data-url") : "";
+      const couplePhotoName = pContainer ? pContainer.getAttribute("data-filename") : "";
+
       // Bundle form fields to storage object
       const details = {
         template: getSelectedTemplate(),
@@ -86,7 +217,11 @@ function setupHomepageFlow() {
         waze: document.getElementById("form-waze").value.trim() || defaultInvitation.waze,
         phone: document.getElementById("form-phone").value.trim() || defaultInvitation.phone,
         music: document.getElementById("form-music").value.trim() || defaultInvitation.music,
-        appearance: appearance
+        appearance: appearance,
+        couplePhoto: {
+          fileName: couplePhotoName || "",
+          dataUrl: couplePhotoUrl || ""
+        }
       };
 
       saveActiveDetails(details);
@@ -145,3 +280,88 @@ function setupHomepageFlow() {
     });
   }
 }
+
+/**
+ * Dynamically applies the brand configuration from app.config.js to the DOM.
+ */
+function applyAppConfig() {
+  // Set page title
+  document.title = `${appConfig.brandName} | Beautiful Digital Invitations`;
+  
+  const metaDescription = document.querySelector('meta[name="description"]');
+  if (metaDescription) {
+    metaDescription.setAttribute("content", `Create beautiful digital invitations for weddings, birthdays, graduations, corporate events, and more with ${appConfig.brandName}.`);
+  }
+
+  // Update dynamic brand monogram elements
+  const monograms = document.querySelectorAll(".brand-monogram");
+  monograms.forEach(el => {
+    el.textContent = appConfig.brandName.charAt(0);
+  });
+
+  // Update brand logo elements
+  const logos = document.querySelectorAll(".brand-logo");
+  logos.forEach(el => {
+    el.textContent = appConfig.brandName;
+  });
+
+  // Handle optional logo image in header (if /brand/logo.webp exists, use it and hide text logo/monogram)
+  const brandLogoImg = document.getElementById("brand-logo-img");
+  const brandLogoText = document.getElementById("brand-logo-text");
+  const brandMonogram = document.querySelector(".brand-monogram");
+  if (brandLogoImg) {
+    brandLogoImg.onload = () => {
+      brandLogoImg.classList.remove("hidden");
+      if (brandLogoText) brandLogoText.classList.add("hidden");
+      if (brandMonogram) brandMonogram.classList.add("hidden");
+    };
+    brandLogoImg.onerror = () => {
+      brandLogoImg.classList.add("hidden");
+      if (brandLogoText) brandLogoText.classList.remove("hidden");
+      if (brandMonogram) brandMonogram.classList.remove("hidden");
+    };
+    brandLogoImg.src = "/brand/logo.webp";
+  }
+
+  // Handle optional home banner image in hero (if /brand/home-banner.webp exists, use it and hide placeholder)
+  const homeBannerImg = document.getElementById("home-banner-img");
+  const homeBannerPlaceholder = document.getElementById("home-banner-placeholder");
+  if (homeBannerImg) {
+    homeBannerImg.onload = () => {
+      homeBannerImg.classList.remove("hidden");
+      if (homeBannerPlaceholder) homeBannerPlaceholder.classList.add("hidden");
+    };
+    homeBannerImg.onerror = () => {
+      homeBannerImg.classList.add("hidden");
+      if (homeBannerPlaceholder) homeBannerPlaceholder.classList.remove("hidden");
+    };
+    homeBannerImg.src = "/brand/home-banner.webp";
+  }
+
+  // Update premium badge references
+  const premiumBadges = document.querySelectorAll(".premium-badge");
+  premiumBadges.forEach(el => {
+    if (el.textContent.includes("WORKSPACE")) {
+      el.textContent = `${appConfig.brandName.toUpperCase()} WORKSPACE`;
+    }
+  });
+
+  // Update preview banner text
+  const previewBannerText = document.querySelector(".preview-banner-text");
+  if (previewBannerText) {
+    previewBannerText.textContent = `✨ PREVIEW MODE | ${appConfig.brandName} Sandbox`;
+  }
+
+  // Update default share links
+  const shareInput = document.getElementById("live-share-link");
+  if (shareInput) {
+    shareInput.value = `${appConfig.domain}/#/invite/adam-hawa`;
+  }
+
+  // Update email placeholder in admin panel
+  const adminEmailInput = document.getElementById("admin-email");
+  if (adminEmailInput) {
+    adminEmailInput.placeholder = `admin@${appConfig.domain.replace('https://', '')}`;
+  }
+}
+

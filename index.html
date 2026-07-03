@@ -3,7 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Wedding Invitation | Adam & Hawa</title>
+    <title>KadKita | Beautiful Digital Invitations</title>
+    <meta name="description" content="Create beautiful digital invitations for weddings, birthdays, graduations, corporate events, and more with KadKita." />
+    <!-- Favicon setup -->
+    <link rel="icon" href="/icons/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
     <!-- Google Fonts for Editorial Luxury Typography (Dior/Vogue/Apple Style) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,7 +31,7 @@
     <!-- Sticky Preview Mode Top Banner -->
     <div id="preview-sticky-banner" class="preview-sticky-banner hidden">
       <div class="preview-banner-content">
-        <span class="preview-banner-text">✨ PREVIEW MODE | She.Co Sandbox</span>
+        <span class="preview-banner-text">✨ PREVIEW MODE | KadKita Sandbox</span>
         <div class="preview-banner-actions">
           <a href="#create" class="preview-banner-btn-secondary">Edit Details</a>
           <a href="#payment" class="preview-banner-btn-primary">Publish — RM99</a>
@@ -41,7 +46,7 @@
         <h3>Your Invitation is Live!</h3>
         <p>Your illustrated wedding invitation has been successfully published to the web.</p>
         <div class="live-link-copy-container">
-          <input type="text" id="live-share-link" value="https://sheco.me/invite/adam-hawa" readonly />
+          <input type="text" id="live-share-link" value="https://kadkita.com.my/#/invite/adam-hawa" readonly />
           <button id="btn-copy-live-link">Copy</button>
         </div>
         <button id="btn-dismiss-success" class="live-success-dismiss">View Invitation</button>
@@ -58,20 +63,49 @@
       <div id="view-home" class="creator-view hidden">
         <!-- Luxury Brand Header -->
         <header class="creator-header">
-          <div class="brand-monogram">S</div>
-          <span class="brand-logo">She.Co Digital Invitation</span>
+          <button id="menu-toggle-btn" class="menu-toggle-btn" aria-label="Toggle Navigation Menu">
+            <span class="hamburger-bar"></span>
+            <span class="hamburger-bar"></span>
+            <span class="hamburger-bar"></span>
+          </button>
+          <div class="brand-monogram">K</div>
+          <div class="brand-logo-container">
+            <img id="brand-logo-img" class="brand-logo-img hidden" src="/brand/logo.webp" alt="KadKita" referrerpolicy="no-referrer" />
+            <span id="brand-logo-text" class="brand-logo">KadKita</span>
+          </div>
+          
+          <!-- Dropdown/Slide-down Navigation Menu -->
+          <nav id="dropdown-menu" class="dropdown-menu hidden">
+            <ul class="menu-list">
+              <li><a href="#/home" class="menu-item-link">Homepage</a></li>
+              <li><a href="#/admin" class="menu-item-link">Admin Dashboard</a></li>
+            </ul>
+          </nav>
         </header>
 
         <!-- Hero Section -->
         <section class="home-hero">
-          <div class="home-badge">Premium Malay Wedding Invitations</div>
-          <h1 class="home-title">Illustrated Wedding Invitations That Come Alive</h1>
-          <p class="home-subtitle">Choose a design, fill in your wedding details, preview your invitation in real-time, and publish with complete RSVP guest tracking.</p>
+          <div class="home-badge">KadKita</div>
+          <h1 class="home-title">Kad Digital Yang Hidup Untuk Setiap Majlis</h1>
+          <p class="home-subtitle">Pilih template, isi maklumat majlis, preview kad digital anda, dan publish selepas bayaran disahkan.</p>
           
-          <div class="home-hero-actions">
-            <a href="#templates" class="home-btn-primary">View Templates</a>
-            <a href="#how-it-works" class="home-btn-secondary" id="scroll-to-how-it-works">How It Works</a>
+          <!-- Banner Placeholder/Image -->
+          <div class="home-banner-wrapper">
+            <div class="home-banner-container">
+              <img id="home-banner-img" class="home-banner-img hidden" src="/brand/home-banner.webp" alt="KadKita Banner" referrerpolicy="no-referrer" />
+              <div id="home-banner-placeholder" class="home-banner-placeholder">
+                <span class="banner-placeholder-title">Banner Placeholder</span>
+                <span class="banner-placeholder-sub">Upload image to:<br><strong>public/brand/home-banner.webp</strong></span>
+              </div>
+            </div>
           </div>
+
+          <div class="home-hero-actions">
+            <a href="#/create" class="home-btn-primary">Cipta Kad Digital</a>
+            <a href="#templates-section" id="scroll-to-templates" class="home-btn-secondary">Lihat Template</a>
+          </div>
+          
+          <p class="home-hero-note">Sesuai untuk majlis kahwin, aqiqah, hari jadi, open house dan event korporat.</p>
         </section>
 
         <!-- How It Works Section -->
@@ -243,6 +277,23 @@
             </div>
           </div>
 
+          <div class="form-section-title">📷 Couple Photo</div>
+          <div class="form-field">
+            <label for="form-couple-photo">Upload Couple Photo</label>
+            <div class="photo-upload-container">
+              <input type="file" id="form-couple-photo" accept="image/png, image/jpeg, image/jpg, image/webp" class="photo-upload-input" />
+              <div class="photo-upload-preview-container">
+                <img id="form-couple-photo-preview" src="" alt="Couple Photo Preview" class="photo-upload-preview hidden" referrerpolicy="no-referrer" />
+                <div id="form-couple-photo-placeholder" class="photo-upload-placeholder">
+                  <span class="upload-icon">📷</span>
+                  <span class="upload-text">Choose a photo or drag & drop</span>
+                </div>
+              </div>
+              <span class="field-hint">Upload one favourite photoshoot or couple photo. This will appear in your invitation. (Max 2MB)</span>
+              <div id="photo-upload-warning" class="photo-upload-warning hidden" style="color: #c0392b; font-family: var(--font-sans); font-size: 0.7rem; font-weight: 500; margin-top: 4px;">Please upload image below 2MB.</div>
+            </div>
+          </div>
+
           <div class="form-section-title">💬 Contact &amp; Ambiance</div>
           <div class="form-field">
             <label for="form-phone">Primary Contact Phone</label>
@@ -399,7 +450,7 @@
         <!-- Admin Login Panel -->
         <div id="admin-login-panel" class="payment-card-layout">
           <div class="payment-header-custom">
-            <span class="premium-badge">SHE.CO WORKSPACE</span>
+            <span class="premium-badge">KADKITA WORKSPACE</span>
             <h2 class="payment-title-custom">Admin Console</h2>
             <p class="payment-subtitle-custom">Please authenticate with your administrator credentials.</p>
           </div>
@@ -408,7 +459,7 @@
             <div class="receipt-uploader-section">
               <div class="form-field" style="margin-bottom:12px; text-align: left;">
                 <label for="admin-email" style="font-family: var(--font-sans); font-size: 0.65rem; font-weight: 600; text-transform: uppercase; color: var(--color-gray-dark); letter-spacing: 1px; display: block; margin-bottom: 4px;">Email Address</label>
-                <input type="email" id="admin-email" placeholder="admin@sheco.me" style="width:100%; padding:10px; border:1px solid rgba(168,147,109,0.25); border-radius:6px; font-family:var(--font-sans); font-size:0.75rem; background: var(--color-cream);" />
+                <input type="email" id="admin-email" placeholder="admin@kadkita.com.my" style="width:100%; padding:10px; border:1px solid rgba(168,147,109,0.25); border-radius:6px; font-family:var(--font-sans); font-size:0.75rem; background: var(--color-cream);" />
               </div>
               <div class="form-field" style="text-align: left;">
                 <label for="admin-password" style="font-family: var(--font-sans); font-size: 0.65rem; font-weight: 600; text-transform: uppercase; color: var(--color-gray-dark); letter-spacing: 1px; display: block; margin-bottom: 4px;">Password</label>
@@ -587,6 +638,25 @@
           </div>
         </section>
 
+        <!-- SECTION 1.5: OUR MOMENT (MVP Couple Portrait Frame) -->
+        <section class="scroll-section our-moment-section animate-on-scroll" id="section-our-moment">
+          <div class="section-content-wrapper">
+            <div class="section-ornament">✦</div>
+            <h2 class="section-title">Our Moment</h2>
+            <p class="section-tagline">The beginning of our forever</p>
+            
+            <div class="portrait-frame-container">
+              <div class="portrait-photo-frame">
+                <img id="invitation-couple-photo" class="couple-photo-img hidden" src="" alt="The Couple" referrerpolicy="no-referrer" />
+                <div id="invitation-couple-photo-placeholder" class="couple-photo-placeholder">
+                  <span class="placeholder-icon">🤍</span>
+                  <span class="placeholder-text">Couple photo will appear here</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <!-- SECTION 2: BRIDE & GROOM PROFILE -->
         <section class="scroll-section profile-section animate-on-scroll" id="section-profiles">
           <div class="section-content-wrapper">
@@ -725,8 +795,8 @@
           </div>
         </section>
 
-        <!-- SECTION 7: STORY GALLERY (HORIZONTAL SWIPE GALLERY) -->
-        <section class="scroll-section gallery-section animate-on-scroll" id="section-gallery">
+        <!-- SECTION 7: STORY GALLERY (HORIZONTAL SWIPE GALLERY - HIDDEN FOR MVP) -->
+        <section class="scroll-section gallery-section animate-on-scroll hidden" id="section-gallery" style="display: none !important;">
           <div class="section-content-wrapper">
             <div class="section-ornament">✦</div>
             <h2 class="section-title">Moments of Us</h2>

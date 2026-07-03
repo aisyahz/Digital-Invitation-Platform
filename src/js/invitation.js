@@ -136,6 +136,21 @@ export async function loadAndInjectInvitationDetails() {
   // Apply the theme CSS variables and custom template graphics/overlays dynamically!
   await applyTheme(details.template);
 
+  // 1.5 Inject dynamic couple photo if exists, otherwise show placeholder
+  const couplePhotoImg = document.getElementById("invitation-couple-photo");
+  const couplePhotoPlaceholder = document.getElementById("invitation-couple-photo-placeholder");
+  if (couplePhotoImg && couplePhotoPlaceholder) {
+    if (details.couplePhoto && details.couplePhoto.dataUrl) {
+      couplePhotoImg.src = details.couplePhoto.dataUrl;
+      couplePhotoImg.classList.remove("hidden");
+      couplePhotoPlaceholder.classList.add("hidden");
+    } else {
+      couplePhotoImg.src = "";
+      couplePhotoImg.classList.add("hidden");
+      couplePhotoPlaceholder.classList.remove("hidden");
+    }
+  }
+
   // 1. Overwrite central content texts
   const injectMapping = {
     "event-type": details.event,

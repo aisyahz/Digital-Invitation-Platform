@@ -3,6 +3,7 @@ import { STORAGE_KEY_PAYMENT, STORAGE_KEY_PAYMENT_JUST } from '../config/constan
 import { storageService } from '../services/storage.service.js';
 import { orderService } from '../services/order.service.js';
 import { invitationService } from '../services/invitation.service.js';
+import { appConfig } from '../config/app.config.js';
 
 // Holds the currently selected receipt file in-memory
 let selectedReceiptFile = null;
@@ -295,7 +296,7 @@ export function setupPaymentSimulation() {
           id: orderId,
           customer_name: `${details.groom} & ${details.bride}`,
           customer_phone: details.phone || '012-3456789',
-          customer_email: `${details.groom.toLowerCase()}.${details.bride.toLowerCase()}@sheco.me`,
+          customer_email: `${details.groom.toLowerCase()}.${details.bride.toLowerCase()}@${appConfig.domain.replace('https://', '')}`,
           template_id: templateId,
           payment_status: 'pending_approval',
           status: 'pending_approval',
@@ -326,7 +327,7 @@ export function setupPaymentSimulation() {
         // Save mock order structure for backwards compatibility if needed
         const pendingOrder = {
           order_id: order.id,
-          merchant: "She.Co Digital Invitation",
+          merchant: `${appConfig.brandName} Digital Invitation`,
           couples: `${details.groom} & ${details.bride}`,
           amount: "RM99",
           payment_status: "pending_approval",
