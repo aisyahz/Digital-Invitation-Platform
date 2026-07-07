@@ -20,36 +20,33 @@ function toModel(row: any): RsvpModel {
   return {
     id: row.id,
     invitationId: row.invitation_id,
-    guestId: row.guest_id,
-    attendanceStatus: row.attendance_status,
-    paxCount: row.pax_count,
+    name: row.name,
+    phone: row.phone,
+    attendance: row.attendance,
+    pax: row.pax,
     message: row.message,
-    note: row.note,
-    status: row.status,
-    createdAt: row.created_at,
-    updatedAt: row.updated_at
+    createdAt: row.created_at
   };
 }
 
 function toInsert(input: CreateRsvpInput) {
   return {
     invitation_id: input.invitationId,
-    guest_id: input.guestId,
-    attendance_status: input.attendanceStatus,
-    pax_count: input.paxCount,
-    message: input.message,
-    note: input.note,
-    status: input.status
+    name: input.name,
+    phone: input.phone,
+    attendance: input.attendance,
+    pax: input.pax,
+    message: input.message
   };
 }
 
 function toUpdate(input: UpdateRsvpInput) {
   return {
-    attendance_status: input.attendanceStatus,
-    pax_count: input.paxCount,
-    message: input.message,
-    note: input.note,
-    status: input.status
+    name: input.name,
+    phone: input.phone,
+    attendance: input.attendance,
+    pax: input.pax,
+    message: input.message
   };
 }
 
@@ -60,7 +57,7 @@ function compact(record: Record<string, unknown>) {
 }
 
 function throwSupabaseError(action: string, error: { message?: string }) {
-  throw new Error(`Failed to ${action} RSVP: ${error.message || 'Unknown Supabase error'}`);
+  throw new Error(`Failed to ${action}: ${error.message || 'Unknown Supabase error'}`);
 }
 
 export const supabaseRsvpRepository: RsvpRepository = {
@@ -88,17 +85,6 @@ export const supabaseRsvpRepository: RsvpRepository = {
     const { data, error } = await query;
     if (error) throwSupabaseError('list RSVPs', error);
     return (data || []).map(toModel);
-  },
-
-  async findByGuestId(guestId) {
-    const { data, error } = await getClient()
-      .from(TABLE_NAME)
-      .select('*')
-      .eq('guest_id', guestId)
-      .maybeSingle();
-
-    if (error) throwSupabaseError(`find RSVP for guest ${guestId}`, error);
-    return data ? toModel(data) : null;
   },
 
   async findByInvitationId(invitationId) {

@@ -12,3 +12,5 @@ export interface GuestRepository {
   update(id: string, input: UpdateGuestInput): Promise<GuestModel>;
   delete(id: string): Promise<void>;
 }
+
+export type GuestMessageRepository = GuestRepository;

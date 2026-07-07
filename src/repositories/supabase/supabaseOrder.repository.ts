@@ -20,42 +20,59 @@ function toModel(row: any): OrderModel {
   return {
     id: row.id,
     invitationId: row.invitation_id,
-    customer: row.customer,
+    editToken: row.edit_token,
+    customer: {
+      name: row.customer_name,
+      email: row.customer_email,
+      phone: row.customer_phone
+    },
+    templateId: row.template_id,
     packageId: row.package_id,
     planName: row.plan_name,
     paymentStatus: row.payment_status,
     totalAmount: row.total_amount,
     currency: row.currency,
+    receiptUrl: row.receipt_url,
     status: row.status,
     createdAt: row.created_at,
-    updatedAt: row.updated_at,
-    paidAt: row.paid_at
+    publishedAt: row.published_at
   };
 }
 
 function toInsert(input: CreateOrderInput) {
   return {
     invitation_id: input.invitationId,
-    customer: input.customer,
+    edit_token: input.editToken,
+    customer_name: input.customer.name,
+    customer_email: input.customer.email,
+    customer_phone: input.customer.phone,
+    template_id: input.templateId,
     package_id: input.packageId,
     plan_name: input.planName,
     payment_status: input.paymentStatus,
     total_amount: input.totalAmount,
     currency: input.currency,
+    receipt_url: input.receiptUrl,
     status: input.status
   };
 }
 
 function toUpdate(input: UpdateOrderInput) {
   return {
-    customer: input.customer,
+    invitation_id: input.invitationId,
+    edit_token: input.editToken,
+    customer_name: input.customer?.name,
+    customer_email: input.customer?.email,
+    customer_phone: input.customer?.phone,
+    template_id: input.templateId,
     package_id: input.packageId,
     plan_name: input.planName,
     payment_status: input.paymentStatus,
     total_amount: input.totalAmount,
     currency: input.currency,
+    receipt_url: input.receiptUrl,
     status: input.status,
-    paid_at: input.paidAt
+    published_at: input.publishedAt
   };
 }
 
@@ -66,7 +83,7 @@ function compact(record: Record<string, unknown>) {
 }
 
 function throwSupabaseError(action: string, error: { message?: string }) {
-  throw new Error(`Failed to ${action} order: ${error.message || 'Unknown Supabase error'}`);
+  throw new Error(`Failed to ${action}: ${error.message || 'Unknown Supabase error'}`);
 }
 
 export const supabaseOrderRepository: OrderRepository = {

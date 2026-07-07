@@ -6,11 +6,11 @@ import type {
   UpdateGuestInput
 } from '../../models';
 
-const TABLE_NAME = 'guests';
+const TABLE_NAME = 'guest_messages';
 
 function getClient() {
   if (!isSupabaseConfigured || !supabase) {
-    throw new Error('Supabase is not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY before using guest repositories.');
+    throw new Error('Supabase is not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY before using guest message repositories.');
   }
 
   return supabase;
@@ -20,38 +20,24 @@ function toModel(row: any): GuestModel {
   return {
     id: row.id,
     invitationId: row.invitation_id,
-    name: row.name,
-    phone: row.phone,
-    email: row.email,
-    status: row.status,
-    rsvpStatus: row.rsvp_status,
-    rsvpId: row.rsvp_id,
-    rsvpAt: row.rsvp_at,
-    createdAt: row.created_at,
-    updatedAt: row.updated_at
+    guestName: row.guest_name,
+    message: row.message,
+    createdAt: row.created_at
   };
 }
 
 function toInsert(input: CreateGuestInput) {
   return {
     invitation_id: input.invitationId,
-    name: input.name,
-    phone: input.phone,
-    email: input.email,
-    status: input.status,
-    rsvp_status: input.rsvpStatus
+    guest_name: input.guestName,
+    message: input.message
   };
 }
 
 function toUpdate(input: UpdateGuestInput) {
   return {
-    name: input.name,
-    phone: input.phone,
-    email: input.email,
-    status: input.status,
-    rsvp_status: input.rsvpStatus,
-    rsvp_id: input.rsvpId,
-    rsvp_at: input.rsvpAt
+    guest_name: input.guestName,
+    message: input.message
   };
 }
 
@@ -62,7 +48,7 @@ function compact(record: Record<string, unknown>) {
 }
 
 function throwSupabaseError(action: string, error: { message?: string }) {
-  throw new Error(`Failed to ${action} guest: ${error.message || 'Unknown Supabase error'}`);
+  throw new Error(`Failed to ${action}: ${error.message || 'Unknown Supabase error'}`);
 }
 
 export const supabaseGuestRepository: GuestRepository = {
@@ -73,7 +59,7 @@ export const supabaseGuestRepository: GuestRepository = {
       .eq('id', id)
       .maybeSingle();
 
-    if (error) throwSupabaseError(`find guest by id ${id}`, error);
+    if (error) throwSupabaseError(`find guest message by id ${id}`, error);
     return data ? toModel(data) : null;
   },
 
@@ -88,7 +74,7 @@ export const supabaseGuestRepository: GuestRepository = {
     }
 
     const { data, error } = await query;
-    if (error) throwSupabaseError('list guests', error);
+    if (error) throwSupabaseError('list guest messages', error);
     return (data || []).map(toModel);
   },
 
@@ -99,7 +85,7 @@ export const supabaseGuestRepository: GuestRepository = {
       .eq('invitation_id', invitationId)
       .order('created_at', { ascending: false });
 
-    if (error) throwSupabaseError(`find guests for invitation ${invitationId}`, error);
+    if (error) throwSupabaseError(`find guest messages for invitation ${invitationId}`, error);
     return (data || []).map(toModel);
   },
 
@@ -110,7 +96,7 @@ export const supabaseGuestRepository: GuestRepository = {
       .select('*')
       .single();
 
-    if (error) throwSupabaseError('create guest', error);
+    if (error) throwSupabaseError('create guest message', error);
     return toModel(data);
   },
 
@@ -122,7 +108,7 @@ export const supabaseGuestRepository: GuestRepository = {
       .select('*')
       .single();
 
-    if (error) throwSupabaseError(`update guest ${id}`, error);
+    if (error) throwSupabaseError(`update guest message ${id}`, error);
     return toModel(data);
   },
 
@@ -132,6 +118,6 @@ export const supabaseGuestRepository: GuestRepository = {
       .delete()
       .eq('id', id);
 
-    if (error) throwSupabaseError(`delete guest ${id}`, error);
+    if (error) throwSupabaseError(`delete guest message ${id}`, error);
   }
 };

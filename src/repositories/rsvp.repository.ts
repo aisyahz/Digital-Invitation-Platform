@@ -7,7 +7,6 @@ import type {
 export interface RsvpRepository {
   findById(id: string): Promise<RsvpModel | null>;
   findAll(invitationId?: string): Promise<RsvpModel[]>;
-  findByGuestId(guestId: string): Promise<RsvpModel | null>;
   findByInvitationId(invitationId: string): Promise<RsvpModel[]>;
   create(input: CreateRsvpInput): Promise<RsvpModel>;
   update(id: string, input: UpdateRsvpInput): Promise<RsvpModel>;

@@ -1,25 +1,17 @@
-export type GuestStatus = 'invited' | 'opened' | 'responded' | 'cancelled';
-export type GuestRsvpStatus = 'pending' | 'attending' | 'not_attending' | 'maybe';
-
-export interface GuestModel {
+export interface GuestMessageModel {
   id: string;
   invitationId: string;
-  name: string;
-  phone?: string;
-  email?: string;
-  status: GuestStatus;
-  rsvpStatus: GuestRsvpStatus;
-  rsvpId?: string;
-  rsvpAt?: string;
+  guestName: string;
+  message: string;
   createdAt: string;
-  updatedAt: string;
 }
 
-export type CreateGuestInput = Omit<
-  GuestModel,
-  'id' | 'createdAt' | 'updatedAt' | 'rsvpId' | 'rsvpAt'
+export type CreateGuestMessageInput = Omit<GuestMessageModel, 'id' | 'createdAt'>;
+
+export type UpdateGuestMessageInput = Partial<
+  Omit<GuestMessageModel, 'id' | 'invitationId' | 'createdAt'>
 >;
 
-export type UpdateGuestInput = Partial<
-  Omit<GuestModel, 'id' | 'invitationId' | 'createdAt' | 'updatedAt'>
->;
+export type GuestModel = GuestMessageModel;
+export type CreateGuestInput = CreateGuestMessageInput;
+export type UpdateGuestInput = UpdateGuestMessageInput;

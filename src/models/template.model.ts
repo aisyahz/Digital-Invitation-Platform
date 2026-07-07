@@ -1,20 +1,27 @@
-export type TemplateStatus = 'active' | 'inactive' | 'archived';
+export type TemplateStatus = 'active' | 'archived';
 
 export interface TemplateModel {
   id: string;
-  key: string;
   name: string;
-  category: string;
-  previewImage: string;
+  slug: string;
+  thumbnail?: string;
+  folder: string;
+  price: string;
   status: TemplateStatus;
+  config?: Record<string, unknown>;
   createdAt: string;
-  updatedAt: string;
-  description?: string;
-  price?: number;
+  version: number;
+  previewImage?: string;
+  coverImage?: string;
+  configFile?: string;
+  animation?: string;
 }
 
-export type CreateTemplateInput = Omit<TemplateModel, 'id' | 'createdAt' | 'updatedAt'>;
+export type CreateTemplateInput = Omit<
+  TemplateModel,
+  'id' | 'createdAt'
+>;
 
 export type UpdateTemplateInput = Partial<
-  Omit<TemplateModel, 'id' | 'key' | 'createdAt' | 'updatedAt'>
+  Omit<TemplateModel, 'id' | 'createdAt'>
 >;

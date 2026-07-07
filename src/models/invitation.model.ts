@@ -1,31 +1,55 @@
-export type InvitationPublishStatus = 'draft' | 'published' | 'unpublished' | 'archived';
+export type InvitationStatus = 'draft' | 'published' | 'archived';
 
-export interface InvitationVenue {
-  name: string;
-  address: string;
-  mapUrl?: string;
-  wazeUrl?: string;
+export interface InvitationContent {
+  bride?: string;
+  groom?: string;
+  event?: string;
+  date?: string;
+  time?: string;
+  venue?: string;
+  address?: string;
+  gmaps?: string;
+  waze?: string;
+  phone?: string;
+  music?: string;
+  [key: string]: unknown;
+}
+
+export interface InvitationSettings {
+  is_active?: boolean;
+  music_enabled?: boolean;
+  allow_wishes?: boolean;
+  watermark_disabled?: boolean;
+  [key: string]: unknown;
+}
+
+export interface InvitationAnalytics {
+  total_views?: number;
+  unique_views?: number;
+  last_viewed?: string | null;
+  map_clicks?: number;
+  gallery_opens?: number;
+  music_plays?: number;
+  rsvp_count?: number;
+  share_count?: number;
+  [key: string]: unknown;
 }
 
 export interface InvitationModel {
   id: string;
-  brideName: string;
-  groomName: string;
-  eventDate: string;
-  eventTime: string;
-  venue: InvitationVenue;
-  templateId: string;
-  templateKey: string;
+  orderId?: string;
   slug: string;
-  status: InvitationPublishStatus;
+  content: InvitationContent;
+  settings: InvitationSettings;
+  analytics: InvitationAnalytics;
+  status?: InvitationStatus;
   createdAt: string;
   updatedAt: string;
-  publishedAt?: string;
 }
 
 export type CreateInvitationInput = Omit<
   InvitationModel,
-  'id' | 'createdAt' | 'updatedAt' | 'publishedAt'
+  'createdAt' | 'updatedAt'
 >;
 
 export type UpdateInvitationInput = Partial<

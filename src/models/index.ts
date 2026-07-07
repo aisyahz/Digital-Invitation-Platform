@@ -1,15 +1,18 @@
 export type {
   CreateGuestInput,
+  CreateGuestMessageInput,
+  GuestMessageModel,
   GuestModel,
-  GuestRsvpStatus,
-  GuestStatus,
-  UpdateGuestInput
+  UpdateGuestInput,
+  UpdateGuestMessageInput
 } from './guest.model';
 export type {
   CreateInvitationInput,
+  InvitationAnalytics,
+  InvitationContent,
   InvitationModel,
-  InvitationPublishStatus,
-  InvitationVenue,
+  InvitationSettings,
+  InvitationStatus,
   UpdateInvitationInput
 } from './invitation.model';
 export type {

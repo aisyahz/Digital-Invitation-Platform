@@ -19,47 +19,34 @@ function getClient() {
 function toModel(row: any): InvitationModel {
   return {
     id: row.id,
-    brideName: row.bride_name,
-    groomName: row.groom_name,
-    eventDate: row.event_date,
-    eventTime: row.event_time,
-    venue: row.venue,
-    templateId: row.template_id,
-    templateKey: row.template_key,
+    orderId: row.order_id,
     slug: row.slug,
-    status: row.status,
+    content: row.content || {},
+    settings: row.settings || {},
+    analytics: row.analytics || {},
     createdAt: row.created_at,
-    updatedAt: row.updated_at,
-    publishedAt: row.published_at
+    updatedAt: row.updated_at
   };
 }
 
 function toInsert(input: CreateInvitationInput) {
   return {
-    bride_name: input.brideName,
-    groom_name: input.groomName,
-    event_date: input.eventDate,
-    event_time: input.eventTime,
-    venue: input.venue,
-    template_id: input.templateId,
-    template_key: input.templateKey,
+    id: input.id,
+    order_id: input.orderId,
     slug: input.slug,
-    status: input.status
+    content: input.content,
+    settings: input.settings,
+    analytics: input.analytics
   };
 }
 
 function toUpdate(input: UpdateInvitationInput) {
   return {
-    bride_name: input.brideName,
-    groom_name: input.groomName,
-    event_date: input.eventDate,
-    event_time: input.eventTime,
-    venue: input.venue,
-    template_id: input.templateId,
-    template_key: input.templateKey,
+    order_id: input.orderId,
     slug: input.slug,
-    status: input.status,
-    published_at: input.publishedAt
+    content: input.content,
+    settings: input.settings,
+    analytics: input.analytics
   };
 }
 
@@ -70,7 +57,7 @@ function compact(record: Record<string, unknown>) {
 }
 
 function throwSupabaseError(action: string, error: { message?: string }) {
-  throw new Error(`Failed to ${action} invitation: ${error.message || 'Unknown Supabase error'}`);
+  throw new Error(`Failed to ${action}: ${error.message || 'Unknown Supabase error'}`);
 }
 
 export const supabaseInvitationRepository: InvitationRepository = {

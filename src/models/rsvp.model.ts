@@ -1,20 +1,18 @@
-export type RsvpAttendanceStatus = 'pending' | 'attending' | 'not_attending' | 'maybe';
+export type RsvpAttendanceStatus = 'yes' | 'no' | 'maybe';
 
 export interface RsvpModel {
   id: string;
   invitationId: string;
-  guestId?: string;
-  attendanceStatus: RsvpAttendanceStatus;
-  paxCount: number;
+  name: string;
+  phone?: string;
+  attendance: RsvpAttendanceStatus;
+  pax: number;
   message?: string;
-  note?: string;
-  status: RsvpAttendanceStatus;
   createdAt: string;
-  updatedAt: string;
 }
 
-export type CreateRsvpInput = Omit<RsvpModel, 'id' | 'createdAt' | 'updatedAt'>;
+export type CreateRsvpInput = Omit<RsvpModel, 'id' | 'createdAt'>;
 
 export type UpdateRsvpInput = Partial<
-  Omit<RsvpModel, 'id' | 'invitationId' | 'guestId' | 'createdAt' | 'updatedAt'>
+  Omit<RsvpModel, 'id' | 'invitationId' | 'createdAt'>
 >;

@@ -19,38 +19,53 @@ function getClient() {
 function toModel(row: any): TemplateModel {
   return {
     id: row.id,
-    key: row.key,
     name: row.name,
-    category: row.category,
-    previewImage: row.preview_image,
+    slug: row.slug,
+    thumbnail: row.thumbnail,
+    folder: row.folder,
+    price: row.price,
     status: row.status,
+    config: row.config,
     createdAt: row.created_at,
-    updatedAt: row.updated_at,
-    description: row.description,
-    price: row.price
+    version: row.version,
+    previewImage: row.preview_image,
+    coverImage: row.cover_image,
+    configFile: row.config_file,
+    animation: row.animation
   };
 }
 
 function toInsert(input: CreateTemplateInput) {
   return {
-    key: input.key,
     name: input.name,
-    category: input.category,
-    preview_image: input.previewImage,
+    slug: input.slug,
+    thumbnail: input.thumbnail,
+    folder: input.folder,
+    price: input.price,
     status: input.status,
-    description: input.description,
-    price: input.price
+    config: input.config,
+    version: input.version,
+    preview_image: input.previewImage,
+    cover_image: input.coverImage,
+    config_file: input.configFile,
+    animation: input.animation
   };
 }
 
 function toUpdate(input: UpdateTemplateInput) {
   return {
     name: input.name,
-    category: input.category,
-    preview_image: input.previewImage,
+    slug: input.slug,
+    thumbnail: input.thumbnail,
+    folder: input.folder,
+    price: input.price,
     status: input.status,
-    description: input.description,
-    price: input.price
+    config: input.config,
+    version: input.version,
+    preview_image: input.previewImage,
+    cover_image: input.coverImage,
+    config_file: input.configFile,
+    animation: input.animation
   };
 }
 
@@ -61,7 +76,7 @@ function compact(record: Record<string, unknown>) {
 }
 
 function throwSupabaseError(action: string, error: { message?: string }) {
-  throw new Error(`Failed to ${action} template: ${error.message || 'Unknown Supabase error'}`);
+  throw new Error(`Failed to ${action}: ${error.message || 'Unknown Supabase error'}`);
 }
 
 export const supabaseTemplateRepository: TemplateRepository = {
@@ -76,14 +91,14 @@ export const supabaseTemplateRepository: TemplateRepository = {
     return data ? toModel(data) : null;
   },
 
-  async findByKey(key) {
+  async findBySlug(slug) {
     const { data, error } = await getClient()
       .from(TABLE_NAME)
       .select('*')
-      .eq('key', key)
+      .eq('slug', slug)
       .maybeSingle();
 
-    if (error) throwSupabaseError(`find template by key ${key}`, error);
+    if (error) throwSupabaseError(`find template by slug ${slug}`, error);
     return data ? toModel(data) : null;
   },
 

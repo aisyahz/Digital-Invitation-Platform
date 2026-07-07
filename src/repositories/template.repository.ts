@@ -6,7 +6,7 @@ import type {
 
 export interface TemplateRepository {
   findById(id: string): Promise<TemplateModel | null>;
-  findByKey(key: string): Promise<TemplateModel | null>;
+  findBySlug(slug: string): Promise<TemplateModel | null>;
   findAll(): Promise<TemplateModel[]>;
   listActive(): Promise<TemplateModel[]>;
   create(input: CreateTemplateInput): Promise<TemplateModel>;
