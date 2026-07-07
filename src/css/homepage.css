@@ -317,6 +317,12 @@
   margin-bottom: 20px;
 }
 
+.template-card-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .choose-template-btn {
   background-color: var(--color-charcoal);
   color: var(--color-white);
@@ -334,6 +340,28 @@
 
 .choose-template-btn:hover {
   background-color: var(--color-gold-dark);
+}
+
+.whatsapp-order-btn {
+  background-color: #1f7a4d;
+  color: var(--color-white);
+  border: none;
+  width: 100%;
+  padding: 14px;
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  display: block;
+  text-align: center;
+}
+
+.whatsapp-order-btn:hover {
+  background-color: #17623d;
 }
 
 /* Pricing Section Card */

@@ -1,6 +1,25 @@
 import { templateService } from '../services/template.service.js';
 import { setSelectedTemplate } from './storage.js';
 
+const WHATSAPP_ORDER_NUMBER = "60136648159";
+
+function buildWhatsAppOrderUrl(template) {
+  const message = [
+    "Hi KadKita, I want to order an invitation.",
+    "",
+    `Template: ${template.name || ""}`,
+    `Price: ${template.price || ""}`,
+    "Wedding date:",
+    "Bride name:",
+    "Groom name:",
+    "Venue:",
+    "My name:",
+    "My phone:"
+  ].join("\n");
+
+  return `https://wa.me/${WHATSAPP_ORDER_NUMBER}?text=${encodeURIComponent(message)}`;
+}
+
 /**
  * Dynamically builds the gallery cards on the homepage from templates.js or Supabase.
  * Fully supports zero-code addition of new templates!
@@ -68,7 +87,7 @@ export async function renderTemplateGallery() {
       const descP = document.createElement("p");
       descP.className = "template-desc";
       // Handle fallback description
-      descP.textContent = tpl.config?.description || tpl.name + " - Exquisite premium illustrated layout.";
+      descP.textContent = tpl.description || tpl.config?.description || tpl.name + " - Exquisite premium illustrated layout.";
 
       const chooseBtn = document.createElement("button");
       chooseBtn.className = "choose-template-btn";
@@ -81,10 +100,22 @@ export async function renderTemplateGallery() {
         window.location.hash = "#create";
       });
 
+      const whatsappBtn = document.createElement("a");
+      whatsappBtn.className = "whatsapp-order-btn";
+      whatsappBtn.href = buildWhatsAppOrderUrl(tpl);
+      whatsappBtn.target = "_blank";
+      whatsappBtn.rel = "noopener noreferrer";
+      whatsappBtn.textContent = "Order via WhatsApp";
+
+      const actionsDiv = document.createElement("div");
+      actionsDiv.className = "template-card-actions";
+      actionsDiv.appendChild(whatsappBtn);
+      actionsDiv.appendChild(chooseBtn);
+
       infoDiv.appendChild(priceDiv);
       infoDiv.appendChild(nameHeader);
       infoDiv.appendChild(descP);
-      infoDiv.appendChild(chooseBtn);
+      infoDiv.appendChild(actionsDiv);
 
       card.appendChild(previewDiv);
       card.appendChild(infoDiv);
