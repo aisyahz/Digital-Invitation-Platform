@@ -61,6 +61,76 @@ function showDashboard() {
   loadAdminDashboardData();
 }
 
+function buildPublicInviteLink(slug) {
+  return `${window.location.origin}${window.location.pathname}#invite/${slug}`;
+}
+
+async function copyText(text, successMessage) {
+  await navigator.clipboard.writeText(text);
+  showToast(successMessage);
+}
+
+function appendPublicLinkBlock(container, slug) {
+  if (!container || !slug) return;
+
+  const publicLink = buildPublicInviteLink(slug);
+  const linkBlock = document.createElement("div");
+  linkBlock.style.cssText = `
+    border-top: 1px dashed rgba(168,147,109,0.15);
+    padding-top: 10px;
+    margin-top: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  `;
+
+  const label = document.createElement("div");
+  label.style.cssText = `font-size:0.55rem; font-weight:700; text-transform:uppercase; letter-spacing:0.8px; color:var(--color-gray-dark);`;
+  label.textContent = "Public invitation link";
+
+  const row = document.createElement("div");
+  row.style.cssText = `display:flex; gap:6px;`;
+
+  const input = document.createElement("input");
+  input.type = "text";
+  input.readOnly = true;
+  input.value = publicLink;
+  input.style.cssText = `
+    flex: 1;
+    min-width: 0;
+    background:#fff;
+    border:1px solid rgba(168,147,109,0.2);
+    border-radius:4px;
+    padding:5px 6px;
+    font-size:0.55rem;
+    color:var(--color-text);
+  `;
+
+  const copyBtn = document.createElement("button");
+  copyBtn.type = "button";
+  copyBtn.textContent = "Copy Link";
+  copyBtn.style.cssText = `
+    background: var(--color-gold);
+    color: var(--color-text);
+    border: none;
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 0.55rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+  `;
+  copyBtn.addEventListener("click", () => {
+    copyText(publicLink, "Public invitation link copied!");
+  });
+
+  row.appendChild(input);
+  row.appendChild(copyBtn);
+  linkBlock.appendChild(label);
+  linkBlock.appendChild(row);
+  container.appendChild(linkBlock);
+}
+
 /**
  * Fetches and displays statistics and order items from Supabase.
  */
@@ -208,18 +278,31 @@ async function loadAdminDashboardData() {
           font-weight: 600;
           cursor: pointer;
         `;
-        approveBtn.textContent = "Approve";
+        approveBtn.textContent = "Publish";
         approveBtn.addEventListener("click", async () => {
           approveBtn.disabled = true;
-          approveBtn.textContent = "Saving...";
+          approveBtn.textContent = "Publishing...";
           const res = await paymentService.approvePayment(order.id);
           if (res.success) {
-            showToast("Order approved & published successfully!");
-            loadAdminDashboardData();
+            const invitation = await invitationService.publishInvitationByOrderId(order.id);
+            if (invitation?.slug) {
+              order.status = 'published';
+              order.payment_status = 'paid';
+              statusBadge.textContent = "published";
+              statusBadge.style.color = "#2d6a4f";
+              statusBadge.style.background = "#d8f3dc";
+              buttonsBlock.innerHTML = "";
+              appendPublicLinkBlock(card, invitation.slug);
+              showToast("Invitation published. Public link is ready to copy.");
+            } else {
+              showToast("Order approved, but no invitation slug was found.");
+              approveBtn.disabled = false;
+              approveBtn.textContent = "Publish";
+            }
           } else {
-            showToast("Approval failed.");
+            showToast("Publish failed.");
             approveBtn.disabled = false;
-            approveBtn.textContent = "Approve";
+            approveBtn.textContent = "Publish";
           }
         });
 
@@ -317,6 +400,13 @@ async function loadAdminDashboardData() {
 
         buttonsBlock.appendChild(viewBtn);
         buttonsBlock.appendChild(copyTokenBtn);
+
+        import('../services/supabaseClient.js')
+          .then(m => m.supabase.from('invitations').select('slug').eq('order_id', order.id).single())
+          .then(({ data }) => {
+            if (data?.slug) appendPublicLinkBlock(card, data.slug);
+          })
+          .catch(() => {});
       }
 
       actionsArea.appendChild(receiptBlock);

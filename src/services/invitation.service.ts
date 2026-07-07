@@ -146,6 +146,50 @@ export const invitationService = {
   },
 
   /**
+   * Publishes an invitation linked to an order and returns the public invitation record.
+   * The current invitations schema has no top-level status/published_at columns, so publish
+   * metadata is kept in settings while preserving the existing content JSONB pattern.
+   */
+  async publishInvitationByOrderId(orderId: string): Promise<Invitation | null> {
+    const publishedAt = new Date().toISOString();
+
+    const { data: existing, error: fetchError } = await supabase
+      .from('invitations')
+      .select('*')
+      .eq('order_id', orderId)
+      .single();
+
+    if (fetchError || !existing) {
+      console.warn(`Failed to find invitation for order ${orderId}:`, fetchError);
+      return null;
+    }
+
+    const settings = {
+      ...(existing.settings || {}),
+      is_active: true,
+      status: 'published',
+      published_at: publishedAt
+    };
+
+    const { data, error } = await supabase
+      .from('invitations')
+      .update({
+        settings,
+        updated_at: publishedAt
+      })
+      .eq('id', existing.id)
+      .select()
+      .single();
+
+    if (error) {
+      console.warn(`Failed to publish invitation for order ${orderId}:`, error);
+      return null;
+    }
+
+    return data;
+  },
+
+  /**
    * Increments and stores analytics separately from invitation content.
    */
   async trackEvent(slugOrId: string, eventName: 'total_views' | 'unique_views' | 'map_clicks' | 'gallery_opens' | 'music_plays' | 'rsvp_count' | 'share_count'): Promise<void> {

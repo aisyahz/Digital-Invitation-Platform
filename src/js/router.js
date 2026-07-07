@@ -160,6 +160,14 @@ export async function handleRoute() {
     document.body.classList.add("live-mode");
     document.body.classList.add("scroll-locked");
 
+    const slug = hash.replace("#invite/", "");
+    const invitation = await invitationService.getInvitationBySlug(slug);
+    if (invitation?.content) {
+      saveActiveDetails(invitation.content);
+      setSelectedTemplate(invitation.content.template || "garden");
+      localStorage.setItem("paymentStatus", "paid");
+    }
+
     // Enforce watermark if payment is not fully paid
     const isPaid = localStorage.getItem("paymentStatus") === "paid";
     if (!isPaid) {
@@ -178,7 +186,6 @@ export async function handleRoute() {
       // Set the dynamic live share url link in copier input
       const shareInput = document.getElementById("live-share-link");
       if (shareInput) {
-        const slug = hash.replace("#invite/", "");
         shareInput.value = `${window.location.origin}${window.location.pathname}#invite/${slug}`;
       }
     }
