@@ -352,11 +352,11 @@ async function loadAdminDashboardData() {
           viewBtn.disabled = true;
           viewBtn.textContent = "Loading...";
           try {
-            const { data } = await import('../services/supabaseClient.js').then(m => m.supabase.from('invitations').select('slug, id').eq('order_id', order.id).single());
-            if (data?.slug) {
-              window.location.hash = `#invite/${data.slug}`;
-            } else if (data?.id) {
-              window.location.hash = `#edit/${data.id}`;
+            const invitation = await invitationService.getInvitationByOrderId(order.id);
+            if (invitation?.slug) {
+              window.location.hash = `#invite/${invitation.slug}`;
+            } else if (invitation?.id) {
+              window.location.hash = `#edit/${invitation.id}`;
             } else {
               showToast("No invitation slug found.");
             }
@@ -383,9 +383,9 @@ async function loadAdminDashboardData() {
         copyTokenBtn.addEventListener("click", async () => {
           copyTokenBtn.textContent = "Loading...";
           try {
-            const { data } = await import('../services/supabaseClient.js').then(m => m.supabase.from('invitations').select('id').eq('order_id', order.id).single());
-            if (data?.id) {
-              const editLink = `${window.location.origin}${window.location.pathname}#edit/${data.id}`;
+            const invitation = await invitationService.getInvitationByOrderId(order.id);
+            if (invitation?.id) {
+              const editLink = `${window.location.origin}${window.location.pathname}#edit/${invitation.id}`;
               navigator.clipboard.writeText(editLink);
               showToast("Secure Edit Link copied to clipboard!");
             } else {
@@ -401,10 +401,9 @@ async function loadAdminDashboardData() {
         buttonsBlock.appendChild(viewBtn);
         buttonsBlock.appendChild(copyTokenBtn);
 
-        import('../services/supabaseClient.js')
-          .then(m => m.supabase.from('invitations').select('slug').eq('order_id', order.id).single())
-          .then(({ data }) => {
-            if (data?.slug) appendPublicLinkBlock(card, data.slug);
+        invitationService.getInvitationByOrderId(order.id)
+          .then(invitation => {
+            if (invitation?.slug) appendPublicLinkBlock(card, invitation.slug);
           })
           .catch(() => {});
       }

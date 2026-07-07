@@ -1,5 +1,7 @@
 import { supabase } from './supabaseClient.js';
 
+const FALLBACK_INVITATIONS_KEY = 'kadkita:fallbackInvitations';
+
 export interface Invitation {
   id: string; // The unique, hard-to-guess edit token
   order_id: string;
@@ -53,6 +55,37 @@ export interface Invitation {
   updated_at?: string;
 }
 
+function getFallbackInvitations(): Invitation[] {
+  try {
+    return JSON.parse(localStorage.getItem(FALLBACK_INVITATIONS_KEY) || '[]');
+  } catch (error) {
+    console.warn('Failed to read fallback invitations from LocalStorage:', error);
+    return [];
+  }
+}
+
+function saveFallbackInvitations(invitations: Invitation[]) {
+  localStorage.setItem(FALLBACK_INVITATIONS_KEY, JSON.stringify(invitations));
+}
+
+function upsertFallbackInvitation(invitation: Invitation): Invitation {
+  const invitations = getFallbackInvitations();
+  const index = invitations.findIndex(item => item.id === invitation.id);
+
+  if (index >= 0) {
+    invitations[index] = { ...invitations[index], ...invitation };
+  } else {
+    invitations.unshift(invitation);
+  }
+
+  saveFallbackInvitations(invitations);
+  return index >= 0 ? invitations[index] : invitations[0];
+}
+
+function findFallbackInvitationByOrderId(orderId: string): Invitation | null {
+  return getFallbackInvitations().find(invitation => invitation.order_id === orderId) || null;
+}
+
 export const invitationService = {
   /**
    * Fetches an invitation by its public slug (e.g. for /invite/adam-hawa)
@@ -66,7 +99,24 @@ export const invitationService = {
 
     if (error) {
       console.warn(`Failed to fetch invitation by slug ${slug}:`, error);
-      return null;
+      return getFallbackInvitations().find(invitation => invitation.slug === slug) || null;
+    }
+    return data;
+  },
+
+  /**
+   * Fetches an invitation by order ID.
+   */
+  async getInvitationByOrderId(orderId: string): Promise<Invitation | null> {
+    const { data, error } = await supabase
+      .from('invitations')
+      .select('*')
+      .eq('order_id', orderId)
+      .single();
+
+    if (error) {
+      console.warn(`Failed to fetch invitation by order ${orderId}:`, error);
+      return findFallbackInvitationByOrderId(orderId);
     }
     return data;
   },
@@ -83,7 +133,7 @@ export const invitationService = {
 
     if (error) {
       console.warn(`Failed to fetch invitation by edit token:`, error);
-      return null;
+      return getFallbackInvitations().find(invitation => invitation.id === token) || null;
     }
     return data;
   },
@@ -114,8 +164,11 @@ export const invitationService = {
 
     if (error) {
       console.warn('Failed to insert invitation in Supabase, using local simulated record:', error);
-      // Fallback
-      return record as Invitation;
+      return upsertFallbackInvitation({
+        ...record,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      } as Invitation);
     }
     return data;
   },
@@ -140,7 +193,15 @@ export const invitationService = {
 
     if (error) {
       console.warn('Failed to update invitation details in Supabase:', error);
-      return null;
+      const fallback = getFallbackInvitations().find(invitation => invitation.id === token);
+      if (!fallback) return null;
+      return upsertFallbackInvitation({
+        ...fallback,
+        content,
+        settings: settings || fallback.settings,
+        analytics: analytics || fallback.analytics,
+        updated_at: updatePayload.updated_at
+      });
     }
     return data;
   },
@@ -153,14 +214,10 @@ export const invitationService = {
   async publishInvitationByOrderId(orderId: string): Promise<Invitation | null> {
     const publishedAt = new Date().toISOString();
 
-    const { data: existing, error: fetchError } = await supabase
-      .from('invitations')
-      .select('*')
-      .eq('order_id', orderId)
-      .single();
+    const existing = await this.getInvitationByOrderId(orderId);
 
-    if (fetchError || !existing) {
-      console.warn(`Failed to find invitation for order ${orderId}:`, fetchError);
+    if (!existing) {
+      console.warn(`Failed to find invitation for order ${orderId}.`);
       return null;
     }
 
@@ -183,7 +240,11 @@ export const invitationService = {
 
     if (error) {
       console.warn(`Failed to publish invitation for order ${orderId}:`, error);
-      return null;
+      return upsertFallbackInvitation({
+        ...existing,
+        settings,
+        updated_at: publishedAt
+      });
     }
 
     return data;
